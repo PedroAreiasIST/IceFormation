@@ -1,0 +1,4579 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 7.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[    154224,       4571]
+NotebookOptionsPosition[    152103,       4532]
+NotebookOutlinePosition[    152716,       4554]
+CellTagsIndexPosition[    152673,       4551]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{"<<", "AceGen`"}], "\n", 
+ RowBox[{
+  RowBox[{"name", "=", 
+   RowBox[{"FileBaseName", "[", 
+    RowBox[{"NotebookFileName", "[", "]"}], "]"}]}], ";"}], "\n", 
+ RowBox[{"SMSInitialize", "[", 
+  RowBox[{"name", ",", 
+   RowBox[{"\"\<Language\>\"", "\[Rule]", "\"\<Fortran90\>\""}], ",", 
+   RowBox[{"\"\<Mode\>\"", "\[Rule]", "\"\<Prototype\>\""}], ",", 
+   RowBox[{"\"\<VectorLength\>\"", "\[Rule]", "50000"}]}], "]"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SMSModule", "[", 
+    RowBox[{"name", ",", 
+     RowBox[{"Real", "[", 
+      RowBox[{
+      "latent$$", ",", "rho$$", ",", "drho$$", ",", "cp$$", ",", "dcp$$", ",",
+        "condu$$", ",", "dcondu$$", ",", "cx$$", ",", "cy$$", ",", "cz$$", ",",
+        "norm2$$", ",", "dtime$$", ",", "lambda$$", ",", "a$$", ",", 
+       RowBox[{"da$$", "[", "3", "]"}], ",", 
+       RowBox[{"xn$$", "[", 
+        RowBox[{"4", ",", "3"}], "]"}], ",", 
+       RowBox[{"uoldn$$", "[", "4", "]"}], ",", 
+       RowBox[{"un$$", "[", "4", "]"}], ",", 
+       RowBox[{"phioldn$$", "[", "4", "]"}], ",", 
+       RowBox[{"phin$$", "[", "4", "]"}], ",", 
+       RowBox[{"efor$$", "[", "8", "]"}], ",", 
+       RowBox[{"emat$$", "[", 
+        RowBox[{"8", ",", "8"}], "]"}], ",", "perturb$$", ",", 
+       RowBox[{"xi$$", "[", "3", "]"}], ",", "wgaus$$"}], "]"}]}], "]"}], 
+   ";"}], "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", "props", " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"latent", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", "latent$$", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"rho", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", "rho$$", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"drho", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", "drho$$", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"cp", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", "cp$$", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"dcp", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", "dcp$$", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"condu", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", "condu$$", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"dcondu", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", "dcondu$$", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"cx", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", "cx$$", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"cy", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", "cy$$", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"cz", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", "cz$$", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"norm2", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", "norm2$$", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"dtime", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", "dtime$$", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"lambda", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", "lambda$$", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"a", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", "a$$", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"da", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", 
+    RowBox[{"Array", "[", 
+     RowBox[{"da$$", ",", 
+      RowBox[{"{", "3", "}"}]}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"xn", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", 
+    RowBox[{"Array", "[", 
+     RowBox[{"xn$$", ",", 
+      RowBox[{"{", 
+       RowBox[{"4", ",", "3"}], "}"}]}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"uoldn", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", 
+    RowBox[{"Array", "[", 
+     RowBox[{"uoldn$$", ",", 
+      RowBox[{"{", "4", "}"}]}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"un", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", 
+    RowBox[{"Array", "[", 
+     RowBox[{"un$$", ",", 
+      RowBox[{"{", "4", "}"}]}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"phioldn", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", 
+    RowBox[{"Array", "[", 
+     RowBox[{"phioldn$$", ",", 
+      RowBox[{"{", "4", "}"}]}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"phin", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", 
+    RowBox[{"Array", "[", 
+     RowBox[{"phin$$", ",", 
+      RowBox[{"{", "4", "}"}]}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"utiln", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", 
+    RowBox[{"Array", "[", 
+     RowBox[{"utiln$$", ",", 
+      RowBox[{"{", "4", "}"}]}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"phitiln", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", 
+    RowBox[{"Array", "[", 
+     RowBox[{"phitiln$$", ",", 
+      RowBox[{"{", "4", "}"}]}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"efor", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", 
+    RowBox[{"Array", "[", 
+     RowBox[{"efor$$", ",", 
+      RowBox[{"{", "8", "}"}]}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"emat", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", 
+    RowBox[{"Array", "[", 
+     RowBox[{"emat$$", ",", 
+      RowBox[{"{", 
+       RowBox[{"8", ",", "8"}], "}"}]}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"perturb", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", "perturb$$", "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"xi", "\[DoubleRightTee]", 
+   RowBox[{"SMSReal", "[", 
+    RowBox[{"Array", "[", 
+     RowBox[{"xi$$", ",", 
+      RowBox[{"{", "3", "}"}]}], "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"wgaus", "\[DoubleRightTee]", 
+    RowBox[{"SMSReal", "[", "wgaus$$", "]"}]}], ";"}], "\[IndentingNewLine]", 
+  
+  RowBox[{"(*", " ", 
+   RowBox[{"shape", " ", "functions"}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"ffor", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{"0", ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "4"}], "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"deri", "=", 
+    RowBox[{"Table", "[", 
+     RowBox[{"0", ",", 
+      RowBox[{"{", 
+       RowBox[{"i", ",", "3"}], "}"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"j", ",", "4"}], "}"}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{
+    RowBox[{"ffor", "=", "K"}], ",", " ", 
+    RowBox[{"deri", "=", "iK"}], ",", " ", 
+    RowBox[{"jac", "=", 
+     RowBox[{"X_iXi", "_j"}]}]}], " ", "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ffor", "[", 
+    RowBox[{"[", "1", "]"}], "]"}], "=", 
+   RowBox[{"1", "-", 
+    RowBox[{"xi", "[", 
+     RowBox[{"[", "1", "]"}], "]"}], "-", 
+    RowBox[{"xi", "[", 
+     RowBox[{"[", "2", "]"}], "]"}], "-", 
+    RowBox[{"xi", "[", 
+     RowBox[{"[", "3", "]"}], "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ffor", "[", 
+    RowBox[{"[", "2", "]"}], "]"}], "=", 
+   RowBox[{"xi", "[", 
+    RowBox[{"[", "1", "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ffor", "[", 
+    RowBox[{"[", "3", "]"}], "]"}], "=", 
+   RowBox[{"xi", "[", 
+    RowBox[{"[", "2", "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"ffor", "[", 
+    RowBox[{"[", "4", "]"}], "]"}], "=", 
+   RowBox[{"xi", "[", 
+    RowBox[{"[", "3", "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"Do", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"deri", "[", 
+      RowBox[{"[", 
+       RowBox[{"i", ",", "j"}], "]"}], "]"}], "=", 
+     RowBox[{"D", "[", 
+      RowBox[{
+       RowBox[{"ffor", "[", 
+        RowBox[{"[", "j", "]"}], "]"}], ",", 
+       RowBox[{"xi", "[", 
+        RowBox[{"[", "i", "]"}], "]"}]}], "]"}]}], ",", 
+    RowBox[{"{", 
+     RowBox[{"i", ",", "3"}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{"j", ",", "4"}], "}"}]}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"jac", "=", 
+   RowBox[{"Table", "[", 
+    RowBox[{"0", ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "3"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"j", ",", "3"}], "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"jac", "=", 
+   RowBox[{
+    RowBox[{"Transpose", "[", "xn", "]"}], ".", 
+    RowBox[{"Transpose", "[", "deri", "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"der", "=", 
+   RowBox[{
+    RowBox[{"Transpose", "[", "deri", "]"}], ".", 
+    RowBox[{"SMSInverse", "[", "jac", "]"}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"anis", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"cx", ",", "0", ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "cy", ",", "0"}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"0", ",", "0", ",", "cz"}], "}"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"der", "=", 
+   RowBox[{"der", ".", "anis"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"nodvarall", "=", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"un", "[", 
+      RowBox[{"[", "1", "]"}], "]"}], ",", 
+     RowBox[{"phin", "[", 
+      RowBox[{"[", "1", "]"}], "]"}], ",", 
+     RowBox[{"un", "[", 
+      RowBox[{"[", "2", "]"}], "]"}], ",", 
+     RowBox[{"phin", "[", 
+      RowBox[{"[", "2", "]"}], "]"}], ",", 
+     RowBox[{"un", "[", 
+      RowBox[{"[", "3", "]"}], "]"}], ",", 
+     RowBox[{"phin", "[", 
+      RowBox[{"[", "3", "]"}], "]"}], ",", 
+     RowBox[{"un", "[", 
+      RowBox[{"[", "4", "]"}], "]"}], ",", 
+     RowBox[{"phin", "[", 
+      RowBox[{"[", "4", "]"}], "]"}]}], "}"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"nodvartil", "=", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"utiln", "[", 
+       RowBox[{"[", "1", "]"}], "]"}], ",", 
+      RowBox[{"phitiln", "[", 
+       RowBox[{"[", "1", "]"}], "]"}], ",", 
+      RowBox[{"utiln", "[", 
+       RowBox[{"[", "2", "]"}], "]"}], ",", 
+      RowBox[{"phitiln", "[", 
+       RowBox[{"[", "2", "]"}], "]"}], ",", 
+      RowBox[{"utiln", "[", 
+       RowBox[{"[", "3", "]"}], "]"}], ",", 
+      RowBox[{"phitiln", "[", 
+       RowBox[{"[", "3", "]"}], "]"}], ",", 
+      RowBox[{"utiln", "[", 
+       RowBox[{"[", "4", "]"}], "]"}], ",", 
+      RowBox[{"phitiln", "[", 
+       RowBox[{"[", "4", "]"}], "]"}]}], "}"}]}], ";"}], 
+  "\[IndentingNewLine]", 
+  RowBox[{"(*", " ", 
+   RowBox[{"interpolated", " ", "virtual", " ", "functions"}], " ", 
+   "*)"}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"util", "\[DoubleRightTee]", 
+   RowBox[{"utiln", ".", "ffor"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"u", "\[DoubleRightTee]", 
+   RowBox[{"un", ".", "ffor"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"uold", "\[DoubleRightTee]", 
+   RowBox[{"uoldn", ".", "ffor"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"phitil", "\[DoubleRightTee]", 
+   RowBox[{"phitiln", ".", "ffor"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"phi", "\[DoubleRightTee]", 
+   RowBox[{"phin", ".", "ffor"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"phiold", "\[DoubleRightTee]", 
+   RowBox[{"phioldn", ".", "ffor"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"gradutil", "\[DoubleRightTee]", 
+   RowBox[{"utiln", ".", "der"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"gradu", "\[DoubleRightTee]", 
+   RowBox[{"un", ".", "der"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"gradphitil", "\[DoubleRightTee]", 
+   RowBox[{"phitiln", ".", "der"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"gradphi", "\[DoubleRightTee]", 
+   RowBox[{"phin", ".", "der"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"phix", "\[DoubleRightTee]", 
+   RowBox[{"gradphi", "[", 
+    RowBox[{"[", "1", "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"phiy", "\[DoubleRightTee]", 
+   RowBox[{"gradphi", "[", 
+    RowBox[{"[", "2", "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"phiz", "\[DoubleRightTee]", 
+   RowBox[{"gradphi", "[", 
+    RowBox[{"[", "3", "]"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pi", "=", 
+   RowBox[{
+    RowBox[{"util", "*", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"latent", "*", 
+          RowBox[{"u", "/", "cp"}]}], ")"}], "*", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"drho", "/", "rho"}], "+", 
+          RowBox[{"dcp", "/", "cp"}]}], ")"}]}], "+", "1"}], ")"}], "*", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"u", "-", "uold"}], ")"}], "/", "dtime"}], ")"}]}], "+", 
+    RowBox[{"util", "*", 
+     RowBox[{"(", 
+      RowBox[{"0.5", "*", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"phi", "-", "phiold"}], ")"}], "/", "dtime"}]}], ")"}]}]}]}],
+   ";"}], "\n", 
+ RowBox[{
+  RowBox[{"pi", "=", 
+   RowBox[{"pi", "-", 
+    RowBox[{"2", "*", "util", "*", 
+     RowBox[{"(", 
+      RowBox[{"dcondu", "/", "condu"}], ")"}], "*", 
+     RowBox[{"gradu", ".", "gradu"}]}], "+", 
+    RowBox[{"2", 
+     RowBox[{"gradutil", ".", "gradu"}]}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pi", "=", 
+   RowBox[{"pi", "+", 
+    RowBox[{"phitil", "*", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"a", "^", "2"}], "*", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"phi", "-", "phiold"}], ")"}], "/", "dtime"}]}], "-", 
+       RowBox[{"(", 
+        RowBox[{"phiold", "-", 
+         RowBox[{"phi", "^", "3"}], "+", 
+         RowBox[{"lambda", "*", "u", "*", 
+          RowBox[{
+           RowBox[{"(", 
+            RowBox[{"1", "-", 
+             RowBox[{"phiold", "^", "2"}]}], ")"}], "^", "2"}]}]}], ")"}]}], 
+      ")"}]}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"pi", "=", 
+   RowBox[{"pi", "+", 
+    RowBox[{"gradphitil", ".", 
+     RowBox[{"(", 
+      RowBox[{"a", "*", "a", "*", "gradphi"}], ")"}]}]}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"pi", "=", 
+  RowBox[{"pi", "+", 
+   RowBox[{"gradphitil", ".", 
+    RowBox[{"(", 
+     RowBox[{"norm2", "*", "a", "*", "da"}], ")"}]}]}]}], "\[IndentingNewLine]", 
+ RowBox[{"pi", "=", 
+  RowBox[{"pi", "*", "wgaus", "*", 
+   RowBox[{"SMSDet", "[", "jac", "]"}]}]}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"gash", "\[DoubleRightTee]", 
+   RowBox[{"SMSD", "[", 
+    RowBox[{"pi", ",", "nodvartil"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"gash2", "\[DoubleRightTee]", 
+   RowBox[{"SMSD", "[", 
+    RowBox[{"gash", ",", "nodvarall"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"efor", "=", 
+   RowBox[{"efor", "+", "gash"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"emat", "=", 
+   RowBox[{"emat", "+", "gash2"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"SMSExport", "[", 
+   RowBox[{"efor", ",", "efor$$"}], "]"}], ";"}], "\n", 
+ RowBox[{
+  RowBox[{"SMSExport", "[", 
+   RowBox[{"emat", ",", "emat$$"}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SMSWrite", "[", "]"}], ";"}], "\n"}], "\n", "True", "\n", 
+ RowBox[{
+  RowBox[{
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"phitil\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {117, 83, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[83, 1]], " ", 
+   RowBox[{"(", 
+    RowBox[{
+     FractionBox[
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         ButtonBox[
+          StyleBox["\<\"a\"\>",
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {117, 4, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[4, 1]], "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         InterpretationBox[
+          ButtonBox[
+           StyleBox["\<\"phi\"\>",
+            StripOnInput->False,
+            FontColor->RGBColor[0, 0, 1]],
+           Appearance->"Palette",
+           ButtonFunction:>AceGen`SMSButtonFunction["", {117, 84, 1}],
+           Evaluator->Automatic,
+           FrameMargins->None,
+           ImageMargins->None,
+           ImageSize->All,
+           Method->"Preemptive"],
+          AceGen`$V[84, 1]], "-", 
+         InterpretationBox[
+          ButtonBox[
+           StyleBox["\<\"phiold\"\>",
+            StripOnInput->False,
+            FontColor->RGBColor[0, 0, 1]],
+           Appearance->"Palette",
+           ButtonFunction:>AceGen`SMSButtonFunction["", {117, 85, 1}],
+           Evaluator->Automatic,
+           FrameMargins->None,
+           ImageMargins->None,
+           ImageSize->All,
+           Method->"Preemptive"],
+          AceGen`$V[85, 1]]}], ")"}]}], 
+      InterpretationBox[
+       ButtonBox[
+        StyleBox["\<\"dtime\"\>",
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {117, 2, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[2, 1]]], "-", 
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"1", "-", 
+        SuperscriptBox[
+         InterpretationBox[
+          ButtonBox[
+           StyleBox["\<\"phi\"\>",
+            StripOnInput->False,
+            FontColor->RGBColor[0, 0, 1]],
+           Appearance->"Palette",
+           ButtonFunction:>AceGen`SMSButtonFunction["", {117, 84, 1}],
+           Evaluator->Automatic,
+           FrameMargins->None,
+           ImageMargins->None,
+           ImageSize->All,
+           Method->"Preemptive"],
+          AceGen`$V[84, 1]], "2"]}], ")"}], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        InterpretationBox[
+         ButtonBox[
+          StyleBox["\<\"phi\"\>",
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {117, 84, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[84, 1]], "-", 
+        RowBox[{
+         InterpretationBox[
+          ButtonBox[
+           StyleBox["\<\"lambda\"\>",
+            StripOnInput->False,
+            FontColor->RGBColor[0, 0, 1]],
+           Appearance->"Palette",
+           ButtonFunction:>AceGen`SMSButtonFunction["", {117, 3, 1}],
+           Evaluator->Automatic,
+           FrameMargins->None,
+           ImageMargins->None,
+           ImageSize->All,
+           Method->"Preemptive"],
+          AceGen`$V[3, 1]], " ", 
+         RowBox[{"(", 
+          RowBox[{"1", "-", 
+           SuperscriptBox[
+            InterpretationBox[
+             ButtonBox[
+              StyleBox["\<\"phi\"\>",
+               StripOnInput->False,
+               FontColor->RGBColor[0, 0, 1]],
+              Appearance->"Palette",
+              ButtonFunction:>AceGen`SMSButtonFunction["", {117, 84, 1}],
+              Evaluator->Automatic,
+              FrameMargins->None,
+              ImageMargins->None,
+              ImageSize->All,
+              Method->"Preemptive"],
+             AceGen`$V[84, 1]], "2"]}], ")"}], " ", 
+         InterpretationBox[
+          ButtonBox[
+           StyleBox["\<\"u\"\>",
+            StripOnInput->False,
+            FontColor->RGBColor[0, 0, 1]],
+           Appearance->"Palette",
+           ButtonFunction:>AceGen`SMSButtonFunction["", {117, 81, 1}],
+           Evaluator->Automatic,
+           FrameMargins->None,
+           ImageMargins->None,
+           ImageSize->All,
+           Method->"Preemptive"],
+          AceGen`$V[81, 1]]}]}], ")"}]}]}], ")"}]}], "+", 
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"-", 
+      FractionBox[
+       RowBox[{"0.5`", " ", 
+        RowBox[{"(", 
+         RowBox[{
+          InterpretationBox[
+           ButtonBox[
+            StyleBox["\<\"phi\"\>",
+             StripOnInput->False,
+             FontColor->RGBColor[0, 0, 1]],
+            Appearance->"Palette",
+            ButtonFunction:>AceGen`SMSButtonFunction["", {117, 84, 1}],
+            Evaluator->Automatic,
+            FrameMargins->None,
+            ImageMargins->None,
+            ImageSize->All,
+            Method->"Preemptive"],
+           AceGen`$V[84, 1]], "-", 
+          InterpretationBox[
+           ButtonBox[
+            StyleBox["\<\"phiold\"\>",
+             StripOnInput->False,
+             FontColor->RGBColor[0, 0, 1]],
+            Appearance->"Palette",
+            ButtonFunction:>AceGen`SMSButtonFunction["", {117, 85, 1}],
+            Evaluator->Automatic,
+            FrameMargins->None,
+            ImageMargins->None,
+            ImageSize->All,
+            Method->"Preemptive"],
+           AceGen`$V[85, 1]]}], ")"}]}], 
+       InterpretationBox[
+        ButtonBox[
+         StyleBox["\<\"dtime\"\>",
+          StripOnInput->False,
+          FontColor->RGBColor[0, 0, 1]],
+         Appearance->"Palette",
+         ButtonFunction:>AceGen`SMSButtonFunction["", {117, 2, 1}],
+         Evaluator->Automatic,
+         FrameMargins->None,
+         ImageMargins->None,
+         ImageSize->All,
+         Method->"Preemptive"],
+        AceGen`$V[2, 1]]]}], "+", 
+     FractionBox[
+      RowBox[{
+       InterpretationBox[
+        ButtonBox[
+         StyleBox["\<\"u\"\>",
+          StripOnInput->False,
+          FontColor->RGBColor[0, 0, 1]],
+         Appearance->"Palette",
+         ButtonFunction:>AceGen`SMSButtonFunction["", {117, 81, 1}],
+         Evaluator->Automatic,
+         FrameMargins->None,
+         ImageMargins->None,
+         ImageSize->All,
+         Method->"Preemptive"],
+        AceGen`$V[81, 1]], "-", 
+       InterpretationBox[
+        ButtonBox[
+         StyleBox["\<\"uold\"\>",
+          StripOnInput->False,
+          FontColor->RGBColor[0, 0, 1]],
+         Appearance->"Palette",
+         ButtonFunction:>AceGen`SMSButtonFunction["", {117, 82, 1}],
+         Evaluator->Automatic,
+         FrameMargins->None,
+         ImageMargins->None,
+         ImageSize->All,
+         Method->"Preemptive"],
+        AceGen`$V[82, 1]]}], 
+      InterpretationBox[
+       ButtonBox[
+        StyleBox["\<\"dtime\"\>",
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {117, 2, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[2, 1]]]}], ")"}], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"util\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {117, 79, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[79, 1]]}], "+", 
+  RowBox[{
+   SuperscriptBox[
+    InterpretationBox[
+     ButtonBox[
+      StyleBox["\<\"a\"\>",
+       StripOnInput->False,
+       FontColor->RGBColor[0, 0, 1]],
+      Appearance->"Palette",
+      ButtonFunction:>AceGen`SMSButtonFunction["", {117, 4, 1}],
+      Evaluator->Automatic,
+      FrameMargins->None,
+      ImageMargins->None,
+      ImageSize->All,
+      Method->"Preemptive"],
+     AceGen`$V[4, 1]], "2"], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"phix\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {117, 98, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[98, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox[
+      SubscriptBox["\<\"gradphitil\"\>", "1"],
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {117, 96, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[96, 1]]}], "+", 
+  RowBox[{
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"a\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {117, 4, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[4, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"norm2\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {117, 1, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[1, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox[
+      SubscriptBox["\<\"da\"\>", "1"],
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {117, 6, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[6, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox[
+      SubscriptBox["\<\"gradphitil\"\>", "1"],
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {117, 96, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[96, 1]]}], "+", 
+  RowBox[{
+   SuperscriptBox[
+    InterpretationBox[
+     ButtonBox[
+      StyleBox["\<\"a\"\>",
+       StripOnInput->False,
+       FontColor->RGBColor[0, 0, 1]],
+      Appearance->"Palette",
+      ButtonFunction:>AceGen`SMSButtonFunction["", {117, 4, 1}],
+      Evaluator->Automatic,
+      FrameMargins->None,
+      ImageMargins->None,
+      ImageSize->All,
+      Method->"Preemptive"],
+     AceGen`$V[4, 1]], "2"], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"phiy\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {117, 99, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[99, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox[
+      SubscriptBox["\<\"gradphitil\"\>", "2"],
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {117, 97, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[97, 1]]}], "+", 
+  RowBox[{
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"a\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {117, 4, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[4, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"norm2\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {117, 1, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[1, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox[
+      SubscriptBox["\<\"da\"\>", "2"],
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {117, 7, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[7, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox[
+      SubscriptBox["\<\"gradphitil\"\>", "2"],
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {117, 97, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[97, 1]]}], "+", 
+  RowBox[{
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"d\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {117, 5, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[5, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox[
+      SubscriptBox["\<\"gradu\"\>", "1"],
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {117, 93, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[93, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox[
+      SubscriptBox["\<\"gradutil\"\>", "1"],
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {117, 88, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[88, 1]]}], "+", 
+  RowBox[{
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"d\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {117, 5, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[5, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox[
+      SubscriptBox["\<\"gradu\"\>", "2"],
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {117, 95, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[95, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox[
+      SubscriptBox["\<\"gradutil\"\>", "2"],
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {117, 91, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[91, 1]]}]}], "\n", 
+ RowBox[{
+  InterpretationBox[
+   ButtonBox[
+    StyleBox["\<\"wgaus\"\>",
+     StripOnInput->False,
+     FontColor->RGBColor[0, 0, 1]],
+    Appearance->"Palette",
+    ButtonFunction:>AceGen`SMSButtonFunction["", {118, 77, 1}],
+    Evaluator->Automatic,
+    FrameMargins->None,
+    ImageMargins->None,
+    ImageSize->All,
+    Method->"Preemptive"],
+   AceGen`$V[77, 1]], " ", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"phitil\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {118, 83, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[83, 1]], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       FractionBox[
+        RowBox[{
+         SuperscriptBox[
+          InterpretationBox[
+           ButtonBox[
+            StyleBox["\<\"a\"\>",
+             StripOnInput->False,
+             FontColor->RGBColor[0, 0, 1]],
+            Appearance->"Palette",
+            ButtonFunction:>AceGen`SMSButtonFunction["", {118, 4, 1}],
+            Evaluator->Automatic,
+            FrameMargins->None,
+            ImageMargins->None,
+            ImageSize->All,
+            Method->"Preemptive"],
+           AceGen`$V[4, 1]], "2"], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           InterpretationBox[
+            ButtonBox[
+             StyleBox["\<\"phi\"\>",
+              StripOnInput->False,
+              FontColor->RGBColor[0, 0, 1]],
+             Appearance->"Palette",
+             ButtonFunction:>AceGen`SMSButtonFunction["", {118, 84, 1}],
+             Evaluator->Automatic,
+             FrameMargins->None,
+             ImageMargins->None,
+             ImageSize->All,
+             Method->"Preemptive"],
+            AceGen`$V[84, 1]], "-", 
+           InterpretationBox[
+            ButtonBox[
+             StyleBox["\<\"phiold\"\>",
+              StripOnInput->False,
+              FontColor->RGBColor[0, 0, 1]],
+             Appearance->"Palette",
+             ButtonFunction:>AceGen`SMSButtonFunction["", {118, 85, 1}],
+             Evaluator->Automatic,
+             FrameMargins->None,
+             ImageMargins->None,
+             ImageSize->All,
+             Method->"Preemptive"],
+            AceGen`$V[85, 1]]}], ")"}]}], 
+        InterpretationBox[
+         ButtonBox[
+          StyleBox["\<\"dtime\"\>",
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {118, 2, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[2, 1]]], "-", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"1", "-", 
+          SuperscriptBox[
+           InterpretationBox[
+            ButtonBox[
+             StyleBox["\<\"phi\"\>",
+              StripOnInput->False,
+              FontColor->RGBColor[0, 0, 1]],
+             Appearance->"Palette",
+             ButtonFunction:>AceGen`SMSButtonFunction["", {118, 84, 1}],
+             Evaluator->Automatic,
+             FrameMargins->None,
+             ImageMargins->None,
+             ImageSize->All,
+             Method->"Preemptive"],
+            AceGen`$V[84, 1]], "2"]}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          InterpretationBox[
+           ButtonBox[
+            StyleBox["\<\"phi\"\>",
+             StripOnInput->False,
+             FontColor->RGBColor[0, 0, 1]],
+            Appearance->"Palette",
+            ButtonFunction:>AceGen`SMSButtonFunction["", {118, 84, 1}],
+            Evaluator->Automatic,
+            FrameMargins->None,
+            ImageMargins->None,
+            ImageSize->All,
+            Method->"Preemptive"],
+           AceGen`$V[84, 1]], "-", 
+          RowBox[{
+           InterpretationBox[
+            ButtonBox[
+             StyleBox["\<\"lambda\"\>",
+              StripOnInput->False,
+              FontColor->RGBColor[0, 0, 1]],
+             Appearance->"Palette",
+             ButtonFunction:>AceGen`SMSButtonFunction["", {118, 3, 1}],
+             Evaluator->Automatic,
+             FrameMargins->None,
+             ImageMargins->None,
+             ImageSize->All,
+             Method->"Preemptive"],
+            AceGen`$V[3, 1]], " ", 
+           RowBox[{"(", 
+            RowBox[{"1", "-", 
+             SuperscriptBox[
+              InterpretationBox[
+               ButtonBox[
+                StyleBox["\<\"phi\"\>",
+                 StripOnInput->False,
+                 FontColor->RGBColor[0, 0, 1]],
+                Appearance->"Palette",
+                ButtonFunction:>AceGen`SMSButtonFunction["", {118, 84, 1}],
+                Evaluator->Automatic,
+                FrameMargins->None,
+                ImageMargins->None,
+                ImageSize->All,
+                Method->"Preemptive"],
+               AceGen`$V[84, 1]], "2"]}], ")"}], " ", 
+           InterpretationBox[
+            ButtonBox[
+             StyleBox["\<\"u\"\>",
+              StripOnInput->False,
+              FontColor->RGBColor[0, 0, 1]],
+             Appearance->"Palette",
+             ButtonFunction:>AceGen`SMSButtonFunction["", {118, 81, 1}],
+             Evaluator->Automatic,
+             FrameMargins->None,
+             ImageMargins->None,
+             ImageSize->All,
+             Method->"Preemptive"],
+            AceGen`$V[81, 1]]}]}], ")"}]}]}], ")"}]}], "+", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", 
+        FractionBox[
+         RowBox[{"0.5`", " ", 
+          RowBox[{"(", 
+           RowBox[{
+            InterpretationBox[
+             ButtonBox[
+              StyleBox["\<\"phi\"\>",
+               StripOnInput->False,
+               FontColor->RGBColor[0, 0, 1]],
+              Appearance->"Palette",
+              ButtonFunction:>AceGen`SMSButtonFunction["", {118, 84, 1}],
+              Evaluator->Automatic,
+              FrameMargins->None,
+              ImageMargins->None,
+              ImageSize->All,
+              Method->"Preemptive"],
+             AceGen`$V[84, 1]], "-", 
+            InterpretationBox[
+             ButtonBox[
+              StyleBox["\<\"phiold\"\>",
+               StripOnInput->False,
+               FontColor->RGBColor[0, 0, 1]],
+              Appearance->"Palette",
+              ButtonFunction:>AceGen`SMSButtonFunction["", {118, 85, 1}],
+              Evaluator->Automatic,
+              FrameMargins->None,
+              ImageMargins->None,
+              ImageSize->All,
+              Method->"Preemptive"],
+             AceGen`$V[85, 1]]}], ")"}]}], 
+         InterpretationBox[
+          ButtonBox[
+           StyleBox["\<\"dtime\"\>",
+            StripOnInput->False,
+            FontColor->RGBColor[0, 0, 1]],
+           Appearance->"Palette",
+           ButtonFunction:>AceGen`SMSButtonFunction["", {118, 2, 1}],
+           Evaluator->Automatic,
+           FrameMargins->None,
+           ImageMargins->None,
+           ImageSize->All,
+           Method->"Preemptive"],
+          AceGen`$V[2, 1]]]}], "+", 
+       FractionBox[
+        RowBox[{
+         InterpretationBox[
+          ButtonBox[
+           StyleBox["\<\"u\"\>",
+            StripOnInput->False,
+            FontColor->RGBColor[0, 0, 1]],
+           Appearance->"Palette",
+           ButtonFunction:>AceGen`SMSButtonFunction["", {118, 81, 1}],
+           Evaluator->Automatic,
+           FrameMargins->None,
+           ImageMargins->None,
+           ImageSize->All,
+           Method->"Preemptive"],
+          AceGen`$V[81, 1]], "-", 
+         InterpretationBox[
+          ButtonBox[
+           StyleBox["\<\"uold\"\>",
+            StripOnInput->False,
+            FontColor->RGBColor[0, 0, 1]],
+           Appearance->"Palette",
+           ButtonFunction:>AceGen`SMSButtonFunction["", {118, 82, 1}],
+           Evaluator->Automatic,
+           FrameMargins->None,
+           ImageMargins->None,
+           ImageSize->All,
+           Method->"Preemptive"],
+          AceGen`$V[82, 1]]}], 
+        InterpretationBox[
+         ButtonBox[
+          StyleBox["\<\"dtime\"\>",
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {118, 2, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[2, 1]]]}], ")"}], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"util\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {118, 79, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[79, 1]]}], "+", 
+    RowBox[{
+     SuperscriptBox[
+      InterpretationBox[
+       ButtonBox[
+        StyleBox["\<\"a\"\>",
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {118, 4, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[4, 1]], "2"], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"phix\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {118, 98, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[98, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox[
+        SubscriptBox["\<\"gradphitil\"\>", "1"],
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {118, 96, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[96, 1]]}], "+", 
+    RowBox[{
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"a\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {118, 4, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[4, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"norm2\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {118, 1, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[1, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox[
+        SubscriptBox["\<\"da\"\>", "1"],
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {118, 6, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[6, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox[
+        SubscriptBox["\<\"gradphitil\"\>", "1"],
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {118, 96, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[96, 1]]}], "+", 
+    RowBox[{
+     SuperscriptBox[
+      InterpretationBox[
+       ButtonBox[
+        StyleBox["\<\"a\"\>",
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {118, 4, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[4, 1]], "2"], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"phiy\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {118, 99, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[99, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox[
+        SubscriptBox["\<\"gradphitil\"\>", "2"],
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {118, 97, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[97, 1]]}], "+", 
+    RowBox[{
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"a\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {118, 4, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[4, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"norm2\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {118, 1, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[1, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox[
+        SubscriptBox["\<\"da\"\>", "2"],
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {118, 7, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[7, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox[
+        SubscriptBox["\<\"gradphitil\"\>", "2"],
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {118, 97, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[97, 1]]}], "+", 
+    RowBox[{
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"d\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {118, 5, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[5, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox[
+        SubscriptBox["\<\"gradu\"\>", "1"],
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {118, 93, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[93, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox[
+        SubscriptBox["\<\"gradutil\"\>", "1"],
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {118, 88, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[88, 1]]}], "+", 
+    RowBox[{
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"d\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {118, 5, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[5, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox[
+        SubscriptBox["\<\"gradu\"\>", "2"],
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {118, 95, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[95, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox[
+        SubscriptBox["\<\"gradutil\"\>", "2"],
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {118, 91, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[91, 1]]}]}], ")"}], " ", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"-", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", 
+          InterpretationBox[
+           ButtonBox[
+            StyleBox[
+             SubscriptBox["\<\"xn\"\>", 
+              
+              InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\"\>",
+               StringForm["``````", 1, "\[VerticalLine]", 2],
+               Editable->False]],
+             StripOnInput->False,
+             FontColor->RGBColor[0, 0, 1]],
+            Appearance->"Palette",
+            ButtonFunction:>AceGen`SMSButtonFunction["", {118, 9, 1}],
+            Evaluator->Automatic,
+            FrameMargins->None,
+            ImageMargins->None,
+            ImageSize->All,
+            Method->"Preemptive"],
+           AceGen`$V[9, 1]]}], "+", 
+         InterpretationBox[
+          ButtonBox[
+           StyleBox[
+            SubscriptBox["\<\"xn\"\>", 
+             
+             InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\"\>",
+              StringForm["``````", 2, "\[VerticalLine]", 2],
+              Editable->False]],
+            StripOnInput->False,
+            FontColor->RGBColor[0, 0, 1]],
+           Appearance->"Palette",
+           ButtonFunction:>AceGen`SMSButtonFunction["", {118, 11, 1}],
+           Evaluator->Automatic,
+           FrameMargins->None,
+           ImageMargins->None,
+           ImageSize->All,
+           Method->"Preemptive"],
+          AceGen`$V[11, 1]]}], ")"}], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", 
+          InterpretationBox[
+           ButtonBox[
+            StyleBox[
+             SubscriptBox["\<\"xn\"\>", 
+              
+              InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+               StringForm["``````", 1, "\[VerticalLine]", 1],
+               Editable->False]],
+             StripOnInput->False,
+             FontColor->RGBColor[0, 0, 1]],
+            Appearance->"Palette",
+            ButtonFunction:>AceGen`SMSButtonFunction["", {118, 8, 1}],
+            Evaluator->Automatic,
+            FrameMargins->None,
+            ImageMargins->None,
+            ImageSize->All,
+            Method->"Preemptive"],
+           AceGen`$V[8, 1]]}], "+", 
+         InterpretationBox[
+          ButtonBox[
+           StyleBox[
+            SubscriptBox["\<\"xn\"\>", 
+             
+             InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"3\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+              StringForm["``````", 3, "\[VerticalLine]", 1],
+              Editable->False]],
+            StripOnInput->False,
+            FontColor->RGBColor[0, 0, 1]],
+           Appearance->"Palette",
+           ButtonFunction:>AceGen`SMSButtonFunction["", {118, 12, 1}],
+           Evaluator->Automatic,
+           FrameMargins->None,
+           ImageMargins->None,
+           ImageSize->All,
+           Method->"Preemptive"],
+          AceGen`$V[12, 1]]}], ")"}]}], ")"}]}], "+", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", 
+        InterpretationBox[
+         ButtonBox[
+          StyleBox[
+           SubscriptBox["\<\"xn\"\>", 
+            
+            InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+             StringForm["``````", 1, "\[VerticalLine]", 1],
+             Editable->False]],
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {118, 8, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[8, 1]]}], "+", 
+       InterpretationBox[
+        ButtonBox[
+         StyleBox[
+          SubscriptBox["\<\"xn\"\>", 
+           
+           InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+            StringForm["``````", 2, "\[VerticalLine]", 1],
+            Editable->False]],
+          StripOnInput->False,
+          FontColor->RGBColor[0, 0, 1]],
+         Appearance->"Palette",
+         ButtonFunction:>AceGen`SMSButtonFunction["", {118, 10, 1}],
+         Evaluator->Automatic,
+         FrameMargins->None,
+         ImageMargins->None,
+         ImageSize->All,
+         Method->"Preemptive"],
+        AceGen`$V[10, 1]]}], ")"}], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", 
+        InterpretationBox[
+         ButtonBox[
+          StyleBox[
+           SubscriptBox["\<\"xn\"\>", 
+            
+            InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\"\>",
+             StringForm["``````", 1, "\[VerticalLine]", 2],
+             Editable->False]],
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {118, 9, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[9, 1]]}], "+", 
+       InterpretationBox[
+        ButtonBox[
+         StyleBox[
+          SubscriptBox["\<\"xn\"\>", 
+           
+           InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"3\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\"\>",
+            StringForm["``````", 3, "\[VerticalLine]", 2],
+            Editable->False]],
+          StripOnInput->False,
+          FontColor->RGBColor[0, 0, 1]],
+         Appearance->"Palette",
+         ButtonFunction:>AceGen`SMSButtonFunction["", {118, 13, 1}],
+         Evaluator->Automatic,
+         FrameMargins->None,
+         ImageMargins->None,
+         ImageSize->All,
+         Method->"Preemptive"],
+        AceGen`$V[13, 1]]}], ")"}]}]}], ")"}]}], "\n", 
+ TagBox[GridBox[{
+    {
+     StyleBox["\"\<File:\>\"",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0, 1],
+      FrontFaceColor->RGBColor[0, 0, 1],
+      BackFaceColor->RGBColor[0, 0, 1],
+      GraphicsColor->RGBColor[0, 0, 1],
+      FontWeight->Bold,
+      FontColor->RGBColor[0, 0, 1]], "\"\<ice2dbasic.f90\>\"", 
+     StyleBox["\"\<Size:\>\"",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0, 1],
+      FrontFaceColor->RGBColor[0, 0, 1],
+      BackFaceColor->RGBColor[0, 0, 1],
+      GraphicsColor->RGBColor[0, 0, 1],
+      FontWeight->Bold,
+      FontColor->RGBColor[0, 0, 1]], "6283"},
+    {"\"\<Methods\>\"", "\"\<No.Formulae\>\"", "\"\<No.Leafs\>\"", 
+     "\[SpanFromLeft]"},
+    {
+     StyleBox["\"\<ice2dbasic\>\"",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0, 1],
+      FrontFaceColor->RGBColor[0, 0, 1],
+      BackFaceColor->RGBColor[0, 0, 1],
+      GraphicsColor->RGBColor[0, 0, 1],
+      FontWeight->Bold,
+      FontColor->RGBColor[0, 0, 1]], "151", "2229", "\[SpanFromLeft]"}
+   },
+   AutoDelete->False,
+   GridBoxDividers->{"Rows" -> {1, 2}},
+   GridBoxFrame->{"ColumnsIndexed" -> {{{1, -1}, {1, -1}} -> True}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]}], "Input",
+ CellChangeTimes->{{3.426186076125*^9, 3.426186080890625*^9}, 
+   3.946054847882831*^9, {3.946090092704812*^9, 3.946090099336857*^9}, {
+   3.946092466871077*^9, 3.9460924716285963`*^9}, {3.946271031786315*^9, 
+   3.946271038032364*^9}, {3.946295667936686*^9, 3.946295668251318*^9}, {
+   3.94629743258887*^9, 3.946297447853013*^9}, {3.946297515673045*^9, 
+   3.946297535458609*^9}, {3.946297812522978*^9, 3.946297867338518*^9}, 
+   3.946304363452386*^9, {3.947481447052311*^9, 3.947481452411458*^9}, {
+   3.947481654556548*^9, 3.947481666952421*^9}, {3.947481698047791*^9, 
+   3.947481720972248*^9}, {3.947516713195222*^9, 3.947516726921557*^9}, {
+   3.9475176068089933`*^9, 3.947517620966895*^9}, {3.9475178249892473`*^9, 
+   3.947517829986431*^9}, {3.947518187887301*^9, 3.947518190716296*^9}, {
+   3.947518648255953*^9, 3.947518664956406*^9}, {3.947518788437398*^9, 
+   3.947518794189814*^9}, {3.947529811146462*^9, 3.947529837260768*^9}, {
+   3.947530779486364*^9, 3.947530809923524*^9}, {3.947561304466119*^9, 
+   3.947561329456588*^9}, {3.9475613675996723`*^9, 3.9475614860078897`*^9}, {
+   3.947561528334893*^9, 3.947561554071982*^9}, {3.947562385421809*^9, 
+   3.947562439326376*^9}, {3.947562625764748*^9, 3.9475626305759172`*^9}, 
+   3.947572672782177*^9, {3.947576533922738*^9, 3.9475765451683893`*^9}, {
+   3.9475808087151327`*^9, 3.947580813540042*^9}, {3.9475956688217077`*^9, 
+   3.947595683705989*^9}, {3.947595769679551*^9, 3.947595790884027*^9}, {
+   3.947595903900559*^9, 3.9475959384715548`*^9}, {3.947596001528002*^9, 
+   3.947596037230276*^9}, {3.947596081962119*^9, 3.947596109661026*^9}, {
+   3.947597229102099*^9, 3.947597233543785*^9}},
+ CellLabel->"In[82]:=",ExpressionUUID->"96ac75c9-d415-4194-a818-a229211ff046"],
+
+Cell[BoxData["True"], "Output",
+ CellChangeTimes->{
+  3.9460901061460238`*^9, 3.9460924822889214`*^9, 3.946094144986815*^9, 
+   3.946094250156856*^9, 3.946094901719736*^9, 3.946117013149132*^9, 
+   3.946271042212826*^9, 3.946295671713813*^9, 3.946297456938957*^9, 
+   3.9462975446105347`*^9, 3.9462978719075737`*^9, 3.946304370619186*^9, 
+   3.946305477466053*^9, 3.947481726568528*^9, 3.947562450449238*^9, {
+   3.947562633037959*^9, 3.947562652024784*^9}, 3.947580859668643*^9, 
+   3.9475972653231707`*^9, 3.947597541960682*^9},
+ CellLabel->"Out[84]=",ExpressionUUID->"3b6ba988-9d95-4fb9-b43e-7c48d8609094"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"phitil\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {144, 136, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[136, 1]], " ", 
+   RowBox[{"(", 
+    RowBox[{
+     SuperscriptBox[
+      InterpretationBox[
+       ButtonBox[
+        StyleBox["\<\"phi\"\>",
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {144, 137, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[137, 1]], "3"], "+", 
+     FractionBox[
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         ButtonBox[
+          StyleBox["\<\"a\"\>",
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {144, 14, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[14, 1]], "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         InterpretationBox[
+          ButtonBox[
+           StyleBox["\<\"phi\"\>",
+            StripOnInput->False,
+            FontColor->RGBColor[0, 0, 1]],
+           Appearance->"Palette",
+           ButtonFunction:>AceGen`SMSButtonFunction["", {144, 137, 1}],
+           Evaluator->Automatic,
+           FrameMargins->None,
+           ImageMargins->None,
+           ImageSize->All,
+           Method->"Preemptive"],
+          AceGen`$V[137, 1]], "-", 
+         InterpretationBox[
+          ButtonBox[
+           StyleBox["\<\"phiold\"\>",
+            StripOnInput->False,
+            FontColor->RGBColor[0, 0, 1]],
+           Appearance->"Palette",
+           ButtonFunction:>AceGen`SMSButtonFunction["", {144, 138, 1}],
+           Evaluator->Automatic,
+           FrameMargins->None,
+           ImageMargins->None,
+           ImageSize->All,
+           Method->"Preemptive"],
+          AceGen`$V[138, 1]]}], ")"}]}], 
+      InterpretationBox[
+       ButtonBox[
+        StyleBox["\<\"dtime\"\>",
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {144, 12, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[12, 1]]], "-", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"phiold\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {144, 138, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[138, 1]], "-", 
+     RowBox[{
+      InterpretationBox[
+       ButtonBox[
+        StyleBox["\<\"lambda\"\>",
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {144, 13, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[13, 1]], " ", 
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{"1", "-", 
+         SuperscriptBox[
+          InterpretationBox[
+           ButtonBox[
+            StyleBox["\<\"phiold\"\>",
+             StripOnInput->False,
+             FontColor->RGBColor[0, 0, 1]],
+            Appearance->"Palette",
+            ButtonFunction:>AceGen`SMSButtonFunction["", {144, 138, 1}],
+            Evaluator->Automatic,
+            FrameMargins->None,
+            ImageMargins->None,
+            ImageSize->All,
+            Method->"Preemptive"],
+           AceGen`$V[138, 1]], "2"]}], ")"}], "2"], " ", 
+      InterpretationBox[
+       ButtonBox[
+        StyleBox["\<\"u\"\>",
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {144, 134, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[134, 1]]}]}], ")"}]}], "+", 
+  FractionBox[
+   RowBox[{"0.5`", " ", 
+    RowBox[{"(", 
+     RowBox[{
+      InterpretationBox[
+       ButtonBox[
+        StyleBox["\<\"phi\"\>",
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {144, 137, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[137, 1]], "-", 
+      InterpretationBox[
+       ButtonBox[
+        StyleBox["\<\"phiold\"\>",
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {144, 138, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[138, 1]]}], ")"}], " ", 
+    InterpretationBox[
+     ButtonBox[
+      StyleBox["\<\"util\"\>",
+       StripOnInput->False,
+       FontColor->RGBColor[0, 0, 1]],
+      Appearance->"Palette",
+      ButtonFunction:>AceGen`SMSButtonFunction["", {144, 132, 1}],
+      Evaluator->Automatic,
+      FrameMargins->None,
+      ImageMargins->None,
+      ImageSize->All,
+      Method->"Preemptive"],
+     AceGen`$V[132, 1]]}], 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"dtime\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {144, 12, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[12, 1]]], "+", 
+  FractionBox[
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{"1", "+", 
+      FractionBox[
+       RowBox[{
+        InterpretationBox[
+         ButtonBox[
+          StyleBox["\<\"latent\"\>",
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {144, 1, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[1, 1]], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          FractionBox[
+           InterpretationBox[
+            ButtonBox[
+             StyleBox["\<\"dcp\"\>",
+              StripOnInput->False,
+              FontColor->RGBColor[0, 0, 1]],
+             Appearance->"Palette",
+             ButtonFunction:>AceGen`SMSButtonFunction["", {144, 5, 1}],
+             Evaluator->Automatic,
+             FrameMargins->None,
+             ImageMargins->None,
+             ImageSize->All,
+             Method->"Preemptive"],
+            AceGen`$V[5, 1]], 
+           InterpretationBox[
+            ButtonBox[
+             StyleBox["\<\"cp\"\>",
+              StripOnInput->False,
+              FontColor->RGBColor[0, 0, 1]],
+             Appearance->"Palette",
+             ButtonFunction:>AceGen`SMSButtonFunction["", {144, 4, 1}],
+             Evaluator->Automatic,
+             FrameMargins->None,
+             ImageMargins->None,
+             ImageSize->All,
+             Method->"Preemptive"],
+            AceGen`$V[4, 1]]], "+", 
+          FractionBox[
+           InterpretationBox[
+            ButtonBox[
+             StyleBox["\<\"drho\"\>",
+              StripOnInput->False,
+              FontColor->RGBColor[0, 0, 1]],
+             Appearance->"Palette",
+             ButtonFunction:>AceGen`SMSButtonFunction["", {144, 3, 1}],
+             Evaluator->Automatic,
+             FrameMargins->None,
+             ImageMargins->None,
+             ImageSize->All,
+             Method->"Preemptive"],
+            AceGen`$V[3, 1]], 
+           InterpretationBox[
+            ButtonBox[
+             StyleBox["\<\"rho\"\>",
+              StripOnInput->False,
+              FontColor->RGBColor[0, 0, 1]],
+             Appearance->"Palette",
+             ButtonFunction:>AceGen`SMSButtonFunction["", {144, 2, 1}],
+             Evaluator->Automatic,
+             FrameMargins->None,
+             ImageMargins->None,
+             ImageSize->All,
+             Method->"Preemptive"],
+            AceGen`$V[2, 1]]]}], ")"}], " ", 
+        InterpretationBox[
+         ButtonBox[
+          StyleBox["\<\"u\"\>",
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {144, 134, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[134, 1]]}], 
+       InterpretationBox[
+        ButtonBox[
+         StyleBox["\<\"cp\"\>",
+          StripOnInput->False,
+          FontColor->RGBColor[0, 0, 1]],
+         Appearance->"Palette",
+         ButtonFunction:>AceGen`SMSButtonFunction["", {144, 4, 1}],
+         Evaluator->Automatic,
+         FrameMargins->None,
+         ImageMargins->None,
+         ImageSize->All,
+         Method->"Preemptive"],
+        AceGen`$V[4, 1]]]}], ")"}], " ", 
+    RowBox[{"(", 
+     RowBox[{
+      InterpretationBox[
+       ButtonBox[
+        StyleBox["\<\"u\"\>",
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {144, 134, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[134, 1]], "-", 
+      InterpretationBox[
+       ButtonBox[
+        StyleBox["\<\"uold\"\>",
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {144, 135, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[135, 1]]}], ")"}], " ", 
+    InterpretationBox[
+     ButtonBox[
+      StyleBox["\<\"util\"\>",
+       StripOnInput->False,
+       FontColor->RGBColor[0, 0, 1]],
+      Appearance->"Palette",
+      ButtonFunction:>AceGen`SMSButtonFunction["", {144, 132, 1}],
+      Evaluator->Automatic,
+      FrameMargins->None,
+      ImageMargins->None,
+      ImageSize->All,
+      Method->"Preemptive"],
+     AceGen`$V[132, 1]]}], 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"dtime\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {144, 12, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[12, 1]]], "+", 
+  RowBox[{
+   SuperscriptBox[
+    InterpretationBox[
+     ButtonBox[
+      StyleBox["\<\"a\"\>",
+       StripOnInput->False,
+       FontColor->RGBColor[0, 0, 1]],
+      Appearance->"Palette",
+      ButtonFunction:>AceGen`SMSButtonFunction["", {144, 14, 1}],
+      Evaluator->Automatic,
+      FrameMargins->None,
+      ImageMargins->None,
+      ImageSize->All,
+      Method->"Preemptive"],
+     AceGen`$V[14, 1]], "2"], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"phix\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {144, 178, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[178, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox[
+      SubscriptBox["\<\"gradphitil\"\>", "1"],
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {144, 175, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[175, 1]]}], "+", 
+  RowBox[{
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"a\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {144, 14, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[14, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"norm2\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {144, 11, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[11, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox[
+      SubscriptBox["\<\"da\"\>", "1"],
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {144, 15, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[15, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox[
+      SubscriptBox["\<\"gradphitil\"\>", "1"],
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {144, 175, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[175, 1]]}], "+", 
+  RowBox[{
+   SuperscriptBox[
+    InterpretationBox[
+     ButtonBox[
+      StyleBox["\<\"a\"\>",
+       StripOnInput->False,
+       FontColor->RGBColor[0, 0, 1]],
+      Appearance->"Palette",
+      ButtonFunction:>AceGen`SMSButtonFunction["", {144, 14, 1}],
+      Evaluator->Automatic,
+      FrameMargins->None,
+      ImageMargins->None,
+      ImageSize->All,
+      Method->"Preemptive"],
+     AceGen`$V[14, 1]], "2"], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"phiy\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {144, 179, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[179, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox[
+      SubscriptBox["\<\"gradphitil\"\>", "2"],
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {144, 176, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[176, 1]]}], "+", 
+  RowBox[{
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"a\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {144, 14, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[14, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"norm2\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {144, 11, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[11, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox[
+      SubscriptBox["\<\"da\"\>", "2"],
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {144, 16, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[16, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox[
+      SubscriptBox["\<\"gradphitil\"\>", "2"],
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {144, 176, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[176, 1]]}], "+", 
+  RowBox[{
+   SuperscriptBox[
+    InterpretationBox[
+     ButtonBox[
+      StyleBox["\<\"a\"\>",
+       StripOnInput->False,
+       FontColor->RGBColor[0, 0, 1]],
+      Appearance->"Palette",
+      ButtonFunction:>AceGen`SMSButtonFunction["", {144, 14, 1}],
+      Evaluator->Automatic,
+      FrameMargins->None,
+      ImageMargins->None,
+      ImageSize->All,
+      Method->"Preemptive"],
+     AceGen`$V[14, 1]], "2"], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"phiz\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {144, 180, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[180, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox[
+      SubscriptBox["\<\"gradphitil\"\>", "3"],
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {144, 177, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[177, 1]]}], "+", 
+  RowBox[{
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"a\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {144, 14, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[14, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"norm2\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {144, 11, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[11, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox[
+      SubscriptBox["\<\"da\"\>", "3"],
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {144, 17, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[17, 1]], " ", 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox[
+      SubscriptBox["\<\"gradphitil\"\>", "3"],
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {144, 177, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[177, 1]]}], "-", 
+  FractionBox[
+   RowBox[{"2", " ", 
+    InterpretationBox[
+     ButtonBox[
+      StyleBox["\<\"dcondu\"\>",
+       StripOnInput->False,
+       FontColor->RGBColor[0, 0, 1]],
+      Appearance->"Palette",
+      ButtonFunction:>AceGen`SMSButtonFunction["", {144, 7, 1}],
+      Evaluator->Automatic,
+      FrameMargins->None,
+      ImageMargins->None,
+      ImageSize->All,
+      Method->"Preemptive"],
+     AceGen`$V[7, 1]], " ", 
+    InterpretationBox[
+     ButtonBox[
+      StyleBox["\<\"util\"\>",
+       StripOnInput->False,
+       FontColor->RGBColor[0, 0, 1]],
+      Appearance->"Palette",
+      ButtonFunction:>AceGen`SMSButtonFunction["", {144, 132, 1}],
+      Evaluator->Automatic,
+      FrameMargins->None,
+      ImageMargins->None,
+      ImageSize->All,
+      Method->"Preemptive"],
+     AceGen`$V[132, 1]], " ", 
+    RowBox[{"(", 
+     RowBox[{
+      SuperscriptBox[
+       InterpretationBox[
+        ButtonBox[
+         StyleBox[
+          SubscriptBox["\<\"gradu\"\>", "1"],
+          StripOnInput->False,
+          FontColor->RGBColor[0, 0, 1]],
+         Appearance->"Palette",
+         ButtonFunction:>AceGen`SMSButtonFunction["", {144, 170, 1}],
+         Evaluator->Automatic,
+         FrameMargins->None,
+         ImageMargins->None,
+         ImageSize->All,
+         Method->"Preemptive"],
+        AceGen`$V[170, 1]], "2"], "+", 
+      SuperscriptBox[
+       InterpretationBox[
+        ButtonBox[
+         StyleBox[
+          SubscriptBox["\<\"gradu\"\>", "2"],
+          StripOnInput->False,
+          FontColor->RGBColor[0, 0, 1]],
+         Appearance->"Palette",
+         ButtonFunction:>AceGen`SMSButtonFunction["", {144, 172, 1}],
+         Evaluator->Automatic,
+         FrameMargins->None,
+         ImageMargins->None,
+         ImageSize->All,
+         Method->"Preemptive"],
+        AceGen`$V[172, 1]], "2"], "+", 
+      SuperscriptBox[
+       InterpretationBox[
+        ButtonBox[
+         StyleBox[
+          SubscriptBox["\<\"gradu\"\>", "3"],
+          StripOnInput->False,
+          FontColor->RGBColor[0, 0, 1]],
+         Appearance->"Palette",
+         ButtonFunction:>AceGen`SMSButtonFunction["", {144, 174, 1}],
+         Evaluator->Automatic,
+         FrameMargins->None,
+         ImageMargins->None,
+         ImageSize->All,
+         Method->"Preemptive"],
+        AceGen`$V[174, 1]], "2"]}], ")"}]}], 
+   InterpretationBox[
+    ButtonBox[
+     StyleBox["\<\"condu\"\>",
+      StripOnInput->False,
+      FontColor->RGBColor[0, 0, 1]],
+     Appearance->"Palette",
+     ButtonFunction:>AceGen`SMSButtonFunction["", {144, 6, 1}],
+     Evaluator->Automatic,
+     FrameMargins->None,
+     ImageMargins->None,
+     ImageSize->All,
+     Method->"Preemptive"],
+    AceGen`$V[6, 1]]], "+", 
+  RowBox[{"2", " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{
+      InterpretationBox[
+       ButtonBox[
+        StyleBox[
+         SubscriptBox["\<\"gradu\"\>", "1"],
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {144, 170, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[170, 1]], " ", 
+      InterpretationBox[
+       ButtonBox[
+        StyleBox[
+         SubscriptBox["\<\"gradutil\"\>", "1"],
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {144, 148, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[148, 1]]}], "+", 
+     RowBox[{
+      InterpretationBox[
+       ButtonBox[
+        StyleBox[
+         SubscriptBox["\<\"gradu\"\>", "2"],
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {144, 172, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[172, 1]], " ", 
+      InterpretationBox[
+       ButtonBox[
+        StyleBox[
+         SubscriptBox["\<\"gradutil\"\>", "2"],
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {144, 158, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[158, 1]]}], "+", 
+     RowBox[{
+      InterpretationBox[
+       ButtonBox[
+        StyleBox[
+         SubscriptBox["\<\"gradu\"\>", "3"],
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {144, 174, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[174, 1]], " ", 
+      InterpretationBox[
+       ButtonBox[
+        StyleBox[
+         SubscriptBox["\<\"gradutil\"\>", "3"],
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {144, 168, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[168, 1]]}]}], ")"}]}]}]], "Output",
+ CellChangeTimes->{
+  3.9460901061460238`*^9, 3.9460924822889214`*^9, 3.946094144986815*^9, 
+   3.946094250156856*^9, 3.946094901719736*^9, 3.946117013149132*^9, 
+   3.946271042212826*^9, 3.946295671713813*^9, 3.946297456938957*^9, 
+   3.9462975446105347`*^9, 3.9462978719075737`*^9, 3.946304370619186*^9, 
+   3.946305477466053*^9, 3.947481726568528*^9, 3.947562450449238*^9, {
+   3.947562633037959*^9, 3.947562652024784*^9}, 3.947580859668643*^9, 
+   3.9475972653231707`*^9, 3.9475975428294888`*^9},
+ CellLabel->
+  "Out[144]=",ExpressionUUID->"dbace8c3-a668-4332-8992-c693a27e4075"],
+
+Cell[BoxData[
+ RowBox[{
+  InterpretationBox[
+   ButtonBox[
+    StyleBox["\<\"wgaus\"\>",
+     StripOnInput->False,
+     FontColor->RGBColor[0, 0, 1]],
+    Appearance->"Palette",
+    ButtonFunction:>AceGen`SMSButtonFunction["", {145, 130, 1}],
+    Evaluator->Automatic,
+    FrameMargins->None,
+    ImageMargins->None,
+    ImageSize->All,
+    Method->"Preemptive"],
+   AceGen`$V[130, 1]], " ", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"phitil\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {145, 136, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[136, 1]], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       SuperscriptBox[
+        InterpretationBox[
+         ButtonBox[
+          StyleBox["\<\"phi\"\>",
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {145, 137, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[137, 1]], "3"], "+", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox[
+          InterpretationBox[
+           ButtonBox[
+            StyleBox["\<\"a\"\>",
+             StripOnInput->False,
+             FontColor->RGBColor[0, 0, 1]],
+            Appearance->"Palette",
+            ButtonFunction:>AceGen`SMSButtonFunction["", {145, 14, 1}],
+            Evaluator->Automatic,
+            FrameMargins->None,
+            ImageMargins->None,
+            ImageSize->All,
+            Method->"Preemptive"],
+           AceGen`$V[14, 1]], "2"], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           InterpretationBox[
+            ButtonBox[
+             StyleBox["\<\"phi\"\>",
+              StripOnInput->False,
+              FontColor->RGBColor[0, 0, 1]],
+             Appearance->"Palette",
+             ButtonFunction:>AceGen`SMSButtonFunction["", {145, 137, 1}],
+             Evaluator->Automatic,
+             FrameMargins->None,
+             ImageMargins->None,
+             ImageSize->All,
+             Method->"Preemptive"],
+            AceGen`$V[137, 1]], "-", 
+           InterpretationBox[
+            ButtonBox[
+             StyleBox["\<\"phiold\"\>",
+              StripOnInput->False,
+              FontColor->RGBColor[0, 0, 1]],
+             Appearance->"Palette",
+             ButtonFunction:>AceGen`SMSButtonFunction["", {145, 138, 1}],
+             Evaluator->Automatic,
+             FrameMargins->None,
+             ImageMargins->None,
+             ImageSize->All,
+             Method->"Preemptive"],
+            AceGen`$V[138, 1]]}], ")"}]}], 
+        InterpretationBox[
+         ButtonBox[
+          StyleBox["\<\"dtime\"\>",
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {145, 12, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[12, 1]]], "-", 
+       InterpretationBox[
+        ButtonBox[
+         StyleBox["\<\"phiold\"\>",
+          StripOnInput->False,
+          FontColor->RGBColor[0, 0, 1]],
+         Appearance->"Palette",
+         ButtonFunction:>AceGen`SMSButtonFunction["", {145, 138, 1}],
+         Evaluator->Automatic,
+         FrameMargins->None,
+         ImageMargins->None,
+         ImageSize->All,
+         Method->"Preemptive"],
+        AceGen`$V[138, 1]], "-", 
+       RowBox[{
+        InterpretationBox[
+         ButtonBox[
+          StyleBox["\<\"lambda\"\>",
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {145, 13, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[13, 1]], " ", 
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{"1", "-", 
+           SuperscriptBox[
+            InterpretationBox[
+             ButtonBox[
+              StyleBox["\<\"phiold\"\>",
+               StripOnInput->False,
+               FontColor->RGBColor[0, 0, 1]],
+              Appearance->"Palette",
+              ButtonFunction:>AceGen`SMSButtonFunction["", {145, 138, 1}],
+              Evaluator->Automatic,
+              FrameMargins->None,
+              ImageMargins->None,
+              ImageSize->All,
+              Method->"Preemptive"],
+             AceGen`$V[138, 1]], "2"]}], ")"}], "2"], " ", 
+        InterpretationBox[
+         ButtonBox[
+          StyleBox["\<\"u\"\>",
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {145, 134, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[134, 1]]}]}], ")"}]}], "+", 
+    FractionBox[
+     RowBox[{"0.5`", " ", 
+      RowBox[{"(", 
+       RowBox[{
+        InterpretationBox[
+         ButtonBox[
+          StyleBox["\<\"phi\"\>",
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {145, 137, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[137, 1]], "-", 
+        InterpretationBox[
+         ButtonBox[
+          StyleBox["\<\"phiold\"\>",
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {145, 138, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[138, 1]]}], ")"}], " ", 
+      InterpretationBox[
+       ButtonBox[
+        StyleBox["\<\"util\"\>",
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {145, 132, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[132, 1]]}], 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"dtime\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {145, 12, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[12, 1]]], "+", 
+    FractionBox[
+     RowBox[{
+      RowBox[{"(", 
+       RowBox[{"1", "+", 
+        FractionBox[
+         RowBox[{
+          InterpretationBox[
+           ButtonBox[
+            StyleBox["\<\"latent\"\>",
+             StripOnInput->False,
+             FontColor->RGBColor[0, 0, 1]],
+            Appearance->"Palette",
+            ButtonFunction:>AceGen`SMSButtonFunction["", {145, 1, 1}],
+            Evaluator->Automatic,
+            FrameMargins->None,
+            ImageMargins->None,
+            ImageSize->All,
+            Method->"Preemptive"],
+           AceGen`$V[1, 1]], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            FractionBox[
+             InterpretationBox[
+              ButtonBox[
+               StyleBox["\<\"dcp\"\>",
+                StripOnInput->False,
+                FontColor->RGBColor[0, 0, 1]],
+               Appearance->"Palette",
+               ButtonFunction:>AceGen`SMSButtonFunction["", {145, 5, 1}],
+               Evaluator->Automatic,
+               FrameMargins->None,
+               ImageMargins->None,
+               ImageSize->All,
+               Method->"Preemptive"],
+              AceGen`$V[5, 1]], 
+             InterpretationBox[
+              ButtonBox[
+               StyleBox["\<\"cp\"\>",
+                StripOnInput->False,
+                FontColor->RGBColor[0, 0, 1]],
+               Appearance->"Palette",
+               ButtonFunction:>AceGen`SMSButtonFunction["", {145, 4, 1}],
+               Evaluator->Automatic,
+               FrameMargins->None,
+               ImageMargins->None,
+               ImageSize->All,
+               Method->"Preemptive"],
+              AceGen`$V[4, 1]]], "+", 
+            FractionBox[
+             InterpretationBox[
+              ButtonBox[
+               StyleBox["\<\"drho\"\>",
+                StripOnInput->False,
+                FontColor->RGBColor[0, 0, 1]],
+               Appearance->"Palette",
+               ButtonFunction:>AceGen`SMSButtonFunction["", {145, 3, 1}],
+               Evaluator->Automatic,
+               FrameMargins->None,
+               ImageMargins->None,
+               ImageSize->All,
+               Method->"Preemptive"],
+              AceGen`$V[3, 1]], 
+             InterpretationBox[
+              ButtonBox[
+               StyleBox["\<\"rho\"\>",
+                StripOnInput->False,
+                FontColor->RGBColor[0, 0, 1]],
+               Appearance->"Palette",
+               ButtonFunction:>AceGen`SMSButtonFunction["", {145, 2, 1}],
+               Evaluator->Automatic,
+               FrameMargins->None,
+               ImageMargins->None,
+               ImageSize->All,
+               Method->"Preemptive"],
+              AceGen`$V[2, 1]]]}], ")"}], " ", 
+          InterpretationBox[
+           ButtonBox[
+            StyleBox["\<\"u\"\>",
+             StripOnInput->False,
+             FontColor->RGBColor[0, 0, 1]],
+            Appearance->"Palette",
+            ButtonFunction:>AceGen`SMSButtonFunction["", {145, 134, 1}],
+            Evaluator->Automatic,
+            FrameMargins->None,
+            ImageMargins->None,
+            ImageSize->All,
+            Method->"Preemptive"],
+           AceGen`$V[134, 1]]}], 
+         InterpretationBox[
+          ButtonBox[
+           StyleBox["\<\"cp\"\>",
+            StripOnInput->False,
+            FontColor->RGBColor[0, 0, 1]],
+           Appearance->"Palette",
+           ButtonFunction:>AceGen`SMSButtonFunction["", {145, 4, 1}],
+           Evaluator->Automatic,
+           FrameMargins->None,
+           ImageMargins->None,
+           ImageSize->All,
+           Method->"Preemptive"],
+          AceGen`$V[4, 1]]]}], ")"}], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        InterpretationBox[
+         ButtonBox[
+          StyleBox["\<\"u\"\>",
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {145, 134, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[134, 1]], "-", 
+        InterpretationBox[
+         ButtonBox[
+          StyleBox["\<\"uold\"\>",
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {145, 135, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[135, 1]]}], ")"}], " ", 
+      InterpretationBox[
+       ButtonBox[
+        StyleBox["\<\"util\"\>",
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {145, 132, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[132, 1]]}], 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"dtime\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {145, 12, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[12, 1]]], "+", 
+    RowBox[{
+     SuperscriptBox[
+      InterpretationBox[
+       ButtonBox[
+        StyleBox["\<\"a\"\>",
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {145, 14, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[14, 1]], "2"], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"phix\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {145, 178, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[178, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox[
+        SubscriptBox["\<\"gradphitil\"\>", "1"],
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {145, 175, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[175, 1]]}], "+", 
+    RowBox[{
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"a\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {145, 14, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[14, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"norm2\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {145, 11, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[11, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox[
+        SubscriptBox["\<\"da\"\>", "1"],
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {145, 15, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[15, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox[
+        SubscriptBox["\<\"gradphitil\"\>", "1"],
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {145, 175, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[175, 1]]}], "+", 
+    RowBox[{
+     SuperscriptBox[
+      InterpretationBox[
+       ButtonBox[
+        StyleBox["\<\"a\"\>",
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {145, 14, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[14, 1]], "2"], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"phiy\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {145, 179, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[179, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox[
+        SubscriptBox["\<\"gradphitil\"\>", "2"],
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {145, 176, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[176, 1]]}], "+", 
+    RowBox[{
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"a\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {145, 14, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[14, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"norm2\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {145, 11, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[11, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox[
+        SubscriptBox["\<\"da\"\>", "2"],
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {145, 16, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[16, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox[
+        SubscriptBox["\<\"gradphitil\"\>", "2"],
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {145, 176, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[176, 1]]}], "+", 
+    RowBox[{
+     SuperscriptBox[
+      InterpretationBox[
+       ButtonBox[
+        StyleBox["\<\"a\"\>",
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {145, 14, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[14, 1]], "2"], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"phiz\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {145, 180, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[180, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox[
+        SubscriptBox["\<\"gradphitil\"\>", "3"],
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {145, 177, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[177, 1]]}], "+", 
+    RowBox[{
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"a\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {145, 14, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[14, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"norm2\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {145, 11, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[11, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox[
+        SubscriptBox["\<\"da\"\>", "3"],
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {145, 17, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[17, 1]], " ", 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox[
+        SubscriptBox["\<\"gradphitil\"\>", "3"],
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {145, 177, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[177, 1]]}], "-", 
+    FractionBox[
+     RowBox[{"2", " ", 
+      InterpretationBox[
+       ButtonBox[
+        StyleBox["\<\"dcondu\"\>",
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {145, 7, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[7, 1]], " ", 
+      InterpretationBox[
+       ButtonBox[
+        StyleBox["\<\"util\"\>",
+         StripOnInput->False,
+         FontColor->RGBColor[0, 0, 1]],
+        Appearance->"Palette",
+        ButtonFunction:>AceGen`SMSButtonFunction["", {145, 132, 1}],
+        Evaluator->Automatic,
+        FrameMargins->None,
+        ImageMargins->None,
+        ImageSize->All,
+        Method->"Preemptive"],
+       AceGen`$V[132, 1]], " ", 
+      RowBox[{"(", 
+       RowBox[{
+        SuperscriptBox[
+         InterpretationBox[
+          ButtonBox[
+           StyleBox[
+            SubscriptBox["\<\"gradu\"\>", "1"],
+            StripOnInput->False,
+            FontColor->RGBColor[0, 0, 1]],
+           Appearance->"Palette",
+           ButtonFunction:>AceGen`SMSButtonFunction["", {145, 170, 1}],
+           Evaluator->Automatic,
+           FrameMargins->None,
+           ImageMargins->None,
+           ImageSize->All,
+           Method->"Preemptive"],
+          AceGen`$V[170, 1]], "2"], "+", 
+        SuperscriptBox[
+         InterpretationBox[
+          ButtonBox[
+           StyleBox[
+            SubscriptBox["\<\"gradu\"\>", "2"],
+            StripOnInput->False,
+            FontColor->RGBColor[0, 0, 1]],
+           Appearance->"Palette",
+           ButtonFunction:>AceGen`SMSButtonFunction["", {145, 172, 1}],
+           Evaluator->Automatic,
+           FrameMargins->None,
+           ImageMargins->None,
+           ImageSize->All,
+           Method->"Preemptive"],
+          AceGen`$V[172, 1]], "2"], "+", 
+        SuperscriptBox[
+         InterpretationBox[
+          ButtonBox[
+           StyleBox[
+            SubscriptBox["\<\"gradu\"\>", "3"],
+            StripOnInput->False,
+            FontColor->RGBColor[0, 0, 1]],
+           Appearance->"Palette",
+           ButtonFunction:>AceGen`SMSButtonFunction["", {145, 174, 1}],
+           Evaluator->Automatic,
+           FrameMargins->None,
+           ImageMargins->None,
+           ImageSize->All,
+           Method->"Preemptive"],
+          AceGen`$V[174, 1]], "2"]}], ")"}]}], 
+     InterpretationBox[
+      ButtonBox[
+       StyleBox["\<\"condu\"\>",
+        StripOnInput->False,
+        FontColor->RGBColor[0, 0, 1]],
+       Appearance->"Palette",
+       ButtonFunction:>AceGen`SMSButtonFunction["", {145, 6, 1}],
+       Evaluator->Automatic,
+       FrameMargins->None,
+       ImageMargins->None,
+       ImageSize->All,
+       Method->"Preemptive"],
+      AceGen`$V[6, 1]]], "+", 
+    RowBox[{"2", " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{
+        InterpretationBox[
+         ButtonBox[
+          StyleBox[
+           SubscriptBox["\<\"gradu\"\>", "1"],
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {145, 170, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[170, 1]], " ", 
+        InterpretationBox[
+         ButtonBox[
+          StyleBox[
+           SubscriptBox["\<\"gradutil\"\>", "1"],
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {145, 148, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[148, 1]]}], "+", 
+       RowBox[{
+        InterpretationBox[
+         ButtonBox[
+          StyleBox[
+           SubscriptBox["\<\"gradu\"\>", "2"],
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {145, 172, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[172, 1]], " ", 
+        InterpretationBox[
+         ButtonBox[
+          StyleBox[
+           SubscriptBox["\<\"gradutil\"\>", "2"],
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {145, 158, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[158, 1]]}], "+", 
+       RowBox[{
+        InterpretationBox[
+         ButtonBox[
+          StyleBox[
+           SubscriptBox["\<\"gradu\"\>", "3"],
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {145, 174, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[174, 1]], " ", 
+        InterpretationBox[
+         ButtonBox[
+          StyleBox[
+           SubscriptBox["\<\"gradutil\"\>", "3"],
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {145, 168, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[168, 1]]}]}], ")"}]}]}], ")"}], " ", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", 
+             InterpretationBox[
+              ButtonBox[
+               StyleBox[
+                SubscriptBox["\<\"xn\"\>", 
+                 
+                 InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"3\\\"}]\\)\"\>",
+                  StringForm["``````", 1, "\[VerticalLine]", 3],
+                  Editable->False]],
+                StripOnInput->False,
+                FontColor->RGBColor[0, 0, 1]],
+               Appearance->"Palette",
+               ButtonFunction:>AceGen`SMSButtonFunction["", {145, 20, 1}],
+               Evaluator->Automatic,
+               FrameMargins->None,
+               ImageMargins->None,
+               ImageSize->All,
+               Method->"Preemptive"],
+              AceGen`$V[20, 1]]}], "+", 
+            InterpretationBox[
+             ButtonBox[
+              StyleBox[
+               SubscriptBox["\<\"xn\"\>", 
+                
+                InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"3\\\"}]\\)\"\>",
+                 StringForm["``````", 2, "\[VerticalLine]", 3],
+                 Editable->False]],
+               StripOnInput->False,
+               FontColor->RGBColor[0, 0, 1]],
+              Appearance->"Palette",
+              ButtonFunction:>AceGen`SMSButtonFunction["", {145, 23, 1}],
+              Evaluator->Automatic,
+              FrameMargins->None,
+              ImageMargins->None,
+              ImageSize->All,
+              Method->"Preemptive"],
+             AceGen`$V[23, 1]]}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", 
+             InterpretationBox[
+              ButtonBox[
+               StyleBox[
+                SubscriptBox["\<\"xn\"\>", 
+                 
+                 InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\"\>",
+                  StringForm["``````", 1, "\[VerticalLine]", 2],
+                  Editable->False]],
+                StripOnInput->False,
+                FontColor->RGBColor[0, 0, 1]],
+               Appearance->"Palette",
+               ButtonFunction:>AceGen`SMSButtonFunction["", {145, 19, 1}],
+               Evaluator->Automatic,
+               FrameMargins->None,
+               ImageMargins->None,
+               ImageSize->All,
+               Method->"Preemptive"],
+              AceGen`$V[19, 1]]}], "+", 
+            InterpretationBox[
+             ButtonBox[
+              StyleBox[
+               SubscriptBox["\<\"xn\"\>", 
+                
+                InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"3\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\"\>",
+                 StringForm["``````", 3, "\[VerticalLine]", 2],
+                 Editable->False]],
+               StripOnInput->False,
+               FontColor->RGBColor[0, 0, 1]],
+              Appearance->"Palette",
+              ButtonFunction:>AceGen`SMSButtonFunction["", {145, 25, 1}],
+              Evaluator->Automatic,
+              FrameMargins->None,
+              ImageMargins->None,
+              ImageSize->All,
+              Method->"Preemptive"],
+             AceGen`$V[25, 1]]}], ")"}]}], ")"}]}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"-", 
+           InterpretationBox[
+            ButtonBox[
+             StyleBox[
+              SubscriptBox["\<\"xn\"\>", 
+               
+               InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\"\>",
+                StringForm["``````", 1, "\[VerticalLine]", 2],
+                Editable->False]],
+              StripOnInput->False,
+              FontColor->RGBColor[0, 0, 1]],
+             Appearance->"Palette",
+             ButtonFunction:>AceGen`SMSButtonFunction["", {145, 19, 1}],
+             Evaluator->Automatic,
+             FrameMargins->None,
+             ImageMargins->None,
+             ImageSize->All,
+             Method->"Preemptive"],
+            AceGen`$V[19, 1]]}], "+", 
+          InterpretationBox[
+           ButtonBox[
+            StyleBox[
+             SubscriptBox["\<\"xn\"\>", 
+              
+              InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\"\>",
+               StringForm["``````", 2, "\[VerticalLine]", 2],
+               Editable->False]],
+             StripOnInput->False,
+             FontColor->RGBColor[0, 0, 1]],
+            Appearance->"Palette",
+            ButtonFunction:>AceGen`SMSButtonFunction["", {145, 22, 1}],
+            Evaluator->Automatic,
+            FrameMargins->None,
+            ImageMargins->None,
+            ImageSize->All,
+            Method->"Preemptive"],
+           AceGen`$V[22, 1]]}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"-", 
+           InterpretationBox[
+            ButtonBox[
+             StyleBox[
+              SubscriptBox["\<\"xn\"\>", 
+               
+               InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"3\\\"}]\\)\"\>",
+                StringForm["``````", 1, "\[VerticalLine]", 3],
+                Editable->False]],
+              StripOnInput->False,
+              FontColor->RGBColor[0, 0, 1]],
+             Appearance->"Palette",
+             ButtonFunction:>AceGen`SMSButtonFunction["", {145, 20, 1}],
+             Evaluator->Automatic,
+             FrameMargins->None,
+             ImageMargins->None,
+             ImageSize->All,
+             Method->"Preemptive"],
+            AceGen`$V[20, 1]]}], "+", 
+          InterpretationBox[
+           ButtonBox[
+            StyleBox[
+             SubscriptBox["\<\"xn\"\>", 
+              
+              InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"3\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"3\\\"}]\\)\"\>",
+               StringForm["``````", 3, "\[VerticalLine]", 3],
+               Editable->False]],
+             StripOnInput->False,
+             FontColor->RGBColor[0, 0, 1]],
+            Appearance->"Palette",
+            ButtonFunction:>AceGen`SMSButtonFunction["", {145, 26, 1}],
+            Evaluator->Automatic,
+            FrameMargins->None,
+            ImageMargins->None,
+            ImageSize->All,
+            Method->"Preemptive"],
+           AceGen`$V[26, 1]]}], ")"}]}]}], ")"}], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", 
+        InterpretationBox[
+         ButtonBox[
+          StyleBox[
+           SubscriptBox["\<\"xn\"\>", 
+            
+            InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+             StringForm["``````", 1, "\[VerticalLine]", 1],
+             Editable->False]],
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {145, 18, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[18, 1]]}], "+", 
+       InterpretationBox[
+        ButtonBox[
+         StyleBox[
+          SubscriptBox["\<\"xn\"\>", 
+           
+           InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"4\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+            StringForm["``````", 4, "\[VerticalLine]", 1],
+            Editable->False]],
+          StripOnInput->False,
+          FontColor->RGBColor[0, 0, 1]],
+         Appearance->"Palette",
+         ButtonFunction:>AceGen`SMSButtonFunction["", {145, 27, 1}],
+         Evaluator->Automatic,
+         FrameMargins->None,
+         ImageMargins->None,
+         ImageSize->All,
+         Method->"Preemptive"],
+        AceGen`$V[27, 1]]}], ")"}]}], "-", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", 
+        InterpretationBox[
+         ButtonBox[
+          StyleBox[
+           SubscriptBox["\<\"xn\"\>", 
+            
+            InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+             StringForm["``````", 1, "\[VerticalLine]", 1],
+             Editable->False]],
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {145, 18, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[18, 1]]}], "+", 
+       InterpretationBox[
+        ButtonBox[
+         StyleBox[
+          SubscriptBox["\<\"xn\"\>", 
+           
+           InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"3\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+            StringForm["``````", 3, "\[VerticalLine]", 1],
+            Editable->False]],
+          StripOnInput->False,
+          FontColor->RGBColor[0, 0, 1]],
+         Appearance->"Palette",
+         ButtonFunction:>AceGen`SMSButtonFunction["", {145, 24, 1}],
+         Evaluator->Automatic,
+         FrameMargins->None,
+         ImageMargins->None,
+         ImageSize->All,
+         Method->"Preemptive"],
+        AceGen`$V[24, 1]]}], ")"}], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", 
+             InterpretationBox[
+              ButtonBox[
+               StyleBox[
+                SubscriptBox["\<\"xn\"\>", 
+                 
+                 InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"3\\\"}]\\)\"\>",
+                  StringForm["``````", 1, "\[VerticalLine]", 3],
+                  Editable->False]],
+                StripOnInput->False,
+                FontColor->RGBColor[0, 0, 1]],
+               Appearance->"Palette",
+               ButtonFunction:>AceGen`SMSButtonFunction["", {145, 20, 1}],
+               Evaluator->Automatic,
+               FrameMargins->None,
+               ImageMargins->None,
+               ImageSize->All,
+               Method->"Preemptive"],
+              AceGen`$V[20, 1]]}], "+", 
+            InterpretationBox[
+             ButtonBox[
+              StyleBox[
+               SubscriptBox["\<\"xn\"\>", 
+                
+                InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"3\\\"}]\\)\"\>",
+                 StringForm["``````", 2, "\[VerticalLine]", 3],
+                 Editable->False]],
+               StripOnInput->False,
+               FontColor->RGBColor[0, 0, 1]],
+              Appearance->"Palette",
+              ButtonFunction:>AceGen`SMSButtonFunction["", {145, 23, 1}],
+              Evaluator->Automatic,
+              FrameMargins->None,
+              ImageMargins->None,
+              ImageSize->All,
+              Method->"Preemptive"],
+             AceGen`$V[23, 1]]}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", 
+             InterpretationBox[
+              ButtonBox[
+               StyleBox[
+                SubscriptBox["\<\"xn\"\>", 
+                 
+                 InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\"\>",
+                  StringForm["``````", 1, "\[VerticalLine]", 2],
+                  Editable->False]],
+                StripOnInput->False,
+                FontColor->RGBColor[0, 0, 1]],
+               Appearance->"Palette",
+               ButtonFunction:>AceGen`SMSButtonFunction["", {145, 19, 1}],
+               Evaluator->Automatic,
+               FrameMargins->None,
+               ImageMargins->None,
+               ImageSize->All,
+               Method->"Preemptive"],
+              AceGen`$V[19, 1]]}], "+", 
+            InterpretationBox[
+             ButtonBox[
+              StyleBox[
+               SubscriptBox["\<\"xn\"\>", 
+                
+                InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"4\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\"\>",
+                 StringForm["``````", 4, "\[VerticalLine]", 2],
+                 Editable->False]],
+               StripOnInput->False,
+               FontColor->RGBColor[0, 0, 1]],
+              Appearance->"Palette",
+              ButtonFunction:>AceGen`SMSButtonFunction["", {145, 28, 1}],
+              Evaluator->Automatic,
+              FrameMargins->None,
+              ImageMargins->None,
+              ImageSize->All,
+              Method->"Preemptive"],
+             AceGen`$V[28, 1]]}], ")"}]}], ")"}]}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"-", 
+           InterpretationBox[
+            ButtonBox[
+             StyleBox[
+              SubscriptBox["\<\"xn\"\>", 
+               
+               InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\"\>",
+                StringForm["``````", 1, "\[VerticalLine]", 2],
+                Editable->False]],
+              StripOnInput->False,
+              FontColor->RGBColor[0, 0, 1]],
+             Appearance->"Palette",
+             ButtonFunction:>AceGen`SMSButtonFunction["", {145, 19, 1}],
+             Evaluator->Automatic,
+             FrameMargins->None,
+             ImageMargins->None,
+             ImageSize->All,
+             Method->"Preemptive"],
+            AceGen`$V[19, 1]]}], "+", 
+          InterpretationBox[
+           ButtonBox[
+            StyleBox[
+             SubscriptBox["\<\"xn\"\>", 
+              
+              InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\"\>",
+               StringForm["``````", 2, "\[VerticalLine]", 2],
+               Editable->False]],
+             StripOnInput->False,
+             FontColor->RGBColor[0, 0, 1]],
+            Appearance->"Palette",
+            ButtonFunction:>AceGen`SMSButtonFunction["", {145, 22, 1}],
+            Evaluator->Automatic,
+            FrameMargins->None,
+            ImageMargins->None,
+            ImageSize->All,
+            Method->"Preemptive"],
+           AceGen`$V[22, 1]]}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"-", 
+           InterpretationBox[
+            ButtonBox[
+             StyleBox[
+              SubscriptBox["\<\"xn\"\>", 
+               
+               InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"3\\\"}]\\)\"\>",
+                StringForm["``````", 1, "\[VerticalLine]", 3],
+                Editable->False]],
+              StripOnInput->False,
+              FontColor->RGBColor[0, 0, 1]],
+             Appearance->"Palette",
+             ButtonFunction:>AceGen`SMSButtonFunction["", {145, 20, 1}],
+             Evaluator->Automatic,
+             FrameMargins->None,
+             ImageMargins->None,
+             ImageSize->All,
+             Method->"Preemptive"],
+            AceGen`$V[20, 1]]}], "+", 
+          InterpretationBox[
+           ButtonBox[
+            StyleBox[
+             SubscriptBox["\<\"xn\"\>", 
+              
+              InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"4\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"3\\\"}]\\)\"\>",
+               StringForm["``````", 4, "\[VerticalLine]", 3],
+               Editable->False]],
+             StripOnInput->False,
+             FontColor->RGBColor[0, 0, 1]],
+            Appearance->"Palette",
+            ButtonFunction:>AceGen`SMSButtonFunction["", {145, 29, 1}],
+            Evaluator->Automatic,
+            FrameMargins->None,
+            ImageMargins->None,
+            ImageSize->All,
+            Method->"Preemptive"],
+           AceGen`$V[29, 1]]}], ")"}]}]}], ")"}]}], "+", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", 
+        InterpretationBox[
+         ButtonBox[
+          StyleBox[
+           SubscriptBox["\<\"xn\"\>", 
+            
+            InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+             StringForm["``````", 1, "\[VerticalLine]", 1],
+             Editable->False]],
+           StripOnInput->False,
+           FontColor->RGBColor[0, 0, 1]],
+          Appearance->"Palette",
+          ButtonFunction:>AceGen`SMSButtonFunction["", {145, 18, 1}],
+          Evaluator->Automatic,
+          FrameMargins->None,
+          ImageMargins->None,
+          ImageSize->All,
+          Method->"Preemptive"],
+         AceGen`$V[18, 1]]}], "+", 
+       InterpretationBox[
+        ButtonBox[
+         StyleBox[
+          SubscriptBox["\<\"xn\"\>", 
+           
+           InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\"\>",
+            StringForm["``````", 2, "\[VerticalLine]", 1],
+            Editable->False]],
+          StripOnInput->False,
+          FontColor->RGBColor[0, 0, 1]],
+         Appearance->"Palette",
+         ButtonFunction:>AceGen`SMSButtonFunction["", {145, 21, 1}],
+         Evaluator->Automatic,
+         FrameMargins->None,
+         ImageMargins->None,
+         ImageSize->All,
+         Method->"Preemptive"],
+        AceGen`$V[21, 1]]}], ")"}], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", 
+             InterpretationBox[
+              ButtonBox[
+               StyleBox[
+                SubscriptBox["\<\"xn\"\>", 
+                 
+                 InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"3\\\"}]\\)\"\>",
+                  StringForm["``````", 1, "\[VerticalLine]", 3],
+                  Editable->False]],
+                StripOnInput->False,
+                FontColor->RGBColor[0, 0, 1]],
+               Appearance->"Palette",
+               ButtonFunction:>AceGen`SMSButtonFunction["", {145, 20, 1}],
+               Evaluator->Automatic,
+               FrameMargins->None,
+               ImageMargins->None,
+               ImageSize->All,
+               Method->"Preemptive"],
+              AceGen`$V[20, 1]]}], "+", 
+            InterpretationBox[
+             ButtonBox[
+              StyleBox[
+               SubscriptBox["\<\"xn\"\>", 
+                
+                InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"3\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"3\\\"}]\\)\"\>",
+                 StringForm["``````", 3, "\[VerticalLine]", 3],
+                 Editable->False]],
+               StripOnInput->False,
+               FontColor->RGBColor[0, 0, 1]],
+              Appearance->"Palette",
+              ButtonFunction:>AceGen`SMSButtonFunction["", {145, 26, 1}],
+              Evaluator->Automatic,
+              FrameMargins->None,
+              ImageMargins->None,
+              ImageSize->All,
+              Method->"Preemptive"],
+             AceGen`$V[26, 1]]}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"-", 
+             InterpretationBox[
+              ButtonBox[
+               StyleBox[
+                SubscriptBox["\<\"xn\"\>", 
+                 
+                 InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\"\>",
+                  StringForm["``````", 1, "\[VerticalLine]", 2],
+                  Editable->False]],
+                StripOnInput->False,
+                FontColor->RGBColor[0, 0, 1]],
+               Appearance->"Palette",
+               ButtonFunction:>AceGen`SMSButtonFunction["", {145, 19, 1}],
+               Evaluator->Automatic,
+               FrameMargins->None,
+               ImageMargins->None,
+               ImageSize->All,
+               Method->"Preemptive"],
+              AceGen`$V[19, 1]]}], "+", 
+            InterpretationBox[
+             ButtonBox[
+              StyleBox[
+               SubscriptBox["\<\"xn\"\>", 
+                
+                InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"4\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\"\>",
+                 StringForm["``````", 4, "\[VerticalLine]", 2],
+                 Editable->False]],
+               StripOnInput->False,
+               FontColor->RGBColor[0, 0, 1]],
+              Appearance->"Palette",
+              ButtonFunction:>AceGen`SMSButtonFunction["", {145, 28, 1}],
+              Evaluator->Automatic,
+              FrameMargins->None,
+              ImageMargins->None,
+              ImageSize->All,
+              Method->"Preemptive"],
+             AceGen`$V[28, 1]]}], ")"}]}], ")"}]}], "+", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"-", 
+           InterpretationBox[
+            ButtonBox[
+             StyleBox[
+              SubscriptBox["\<\"xn\"\>", 
+               
+               InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\"\>",
+                StringForm["``````", 1, "\[VerticalLine]", 2],
+                Editable->False]],
+              StripOnInput->False,
+              FontColor->RGBColor[0, 0, 1]],
+             Appearance->"Palette",
+             ButtonFunction:>AceGen`SMSButtonFunction["", {145, 19, 1}],
+             Evaluator->Automatic,
+             FrameMargins->None,
+             ImageMargins->None,
+             ImageSize->All,
+             Method->"Preemptive"],
+            AceGen`$V[19, 1]]}], "+", 
+          InterpretationBox[
+           ButtonBox[
+            StyleBox[
+             SubscriptBox["\<\"xn\"\>", 
+              
+              InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"3\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"2\\\"}]\\)\"\>",
+               StringForm["``````", 3, "\[VerticalLine]", 2],
+               Editable->False]],
+             StripOnInput->False,
+             FontColor->RGBColor[0, 0, 1]],
+            Appearance->"Palette",
+            ButtonFunction:>AceGen`SMSButtonFunction["", {145, 25, 1}],
+            Evaluator->Automatic,
+            FrameMargins->None,
+            ImageMargins->None,
+            ImageSize->All,
+            Method->"Preemptive"],
+           AceGen`$V[25, 1]]}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"-", 
+           InterpretationBox[
+            ButtonBox[
+             StyleBox[
+              SubscriptBox["\<\"xn\"\>", 
+               
+               InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"1\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"3\\\"}]\\)\"\>",
+                StringForm["``````", 1, "\[VerticalLine]", 3],
+                Editable->False]],
+              StripOnInput->False,
+              FontColor->RGBColor[0, 0, 1]],
+             Appearance->"Palette",
+             ButtonFunction:>AceGen`SMSButtonFunction["", {145, 20, 1}],
+             Evaluator->Automatic,
+             FrameMargins->None,
+             ImageMargins->None,
+             ImageSize->All,
+             Method->"Preemptive"],
+            AceGen`$V[20, 1]]}], "+", 
+          InterpretationBox[
+           ButtonBox[
+            StyleBox[
+             SubscriptBox["\<\"xn\"\>", 
+              
+              InterpretationBox["\<\"\\!\\(\\*RowBox[{\\\"4\\\"}]\\)\
+\[VerticalLine]\\!\\(\\*RowBox[{\\\"3\\\"}]\\)\"\>",
+               StringForm["``````", 4, "\[VerticalLine]", 3],
+               Editable->False]],
+             StripOnInput->False,
+             FontColor->RGBColor[0, 0, 1]],
+            Appearance->"Palette",
+            ButtonFunction:>AceGen`SMSButtonFunction["", {145, 29, 1}],
+            Evaluator->Automatic,
+            FrameMargins->None,
+            ImageMargins->None,
+            ImageSize->All,
+            Method->"Preemptive"],
+           AceGen`$V[29, 1]]}], ")"}]}]}], ")"}]}]}], ")"}]}]], "Output",
+ CellChangeTimes->{
+  3.9460901061460238`*^9, 3.9460924822889214`*^9, 3.946094144986815*^9, 
+   3.946094250156856*^9, 3.946094901719736*^9, 3.946117013149132*^9, 
+   3.946271042212826*^9, 3.946295671713813*^9, 3.946297456938957*^9, 
+   3.9462975446105347`*^9, 3.9462978719075737`*^9, 3.946304370619186*^9, 
+   3.946305477466053*^9, 3.947481726568528*^9, 3.947562450449238*^9, {
+   3.947562633037959*^9, 3.947562652024784*^9}, 3.947580859668643*^9, 
+   3.9475972653231707`*^9, 3.947597542849392*^9},
+ CellLabel->
+  "Out[145]=",ExpressionUUID->"0583a97a-4145-4773-9eda-d64d78326cfe"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     StyleBox["\<\"File:\"\>",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0, 1],
+      FrontFaceColor->RGBColor[0, 0, 1],
+      BackFaceColor->RGBColor[0, 0, 1],
+      GraphicsColor->RGBColor[0, 0, 1],
+      FontWeight->Bold,
+      FontColor->RGBColor[0, 0, 1]], "\<\"ice3dbasiclinear.f90\"\>", 
+     StyleBox["\<\"Size:\"\>",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0, 1],
+      FrontFaceColor->RGBColor[0, 0, 1],
+      BackFaceColor->RGBColor[0, 0, 1],
+      GraphicsColor->RGBColor[0, 0, 1],
+      FontWeight->Bold,
+      FontColor->RGBColor[0, 0, 1]], "13391"},
+    {"\<\"Methods\"\>", "\<\"No.Formulae\"\>", "\<\"No.Leafs\"\>", 
+     "\[SpanFromLeft]"},
+    {
+     StyleBox["\<\"ice3dbasiclinear\"\>",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0, 1],
+      FrontFaceColor->RGBColor[0, 0, 1],
+      BackFaceColor->RGBColor[0, 0, 1],
+      GraphicsColor->RGBColor[0, 0, 1],
+      FontWeight->Bold,
+      FontColor->RGBColor[0, 0, 1]], "309", "5078", "\[SpanFromLeft]"}
+   },
+   AutoDelete->False,
+   GridBoxDividers->{"Rows" -> {1, 2}},
+   GridBoxFrame->{"ColumnsIndexed" -> {{{1, -1}, {1, -1}} -> True}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Print",
+ CellChangeTimes->{
+  3.946090106842091*^9, 3.94609248290884*^9, 3.94609414581007*^9, 
+   3.946094250849463*^9, 3.9460949023595657`*^9, 3.946117014260558*^9, 
+   3.946271042928116*^9, 3.946295672497624*^9, 3.946297457727605*^9, 
+   3.9462975453990993`*^9, 3.946297872703401*^9, 3.946304371315628*^9, 
+   3.946305478745335*^9, 3.947481728140338*^9, 3.947562450999915*^9, {
+   3.947562634614091*^9, 3.947562653708185*^9}, 3.9475808613277273`*^9, 
+   3.947597268353999*^9, 3.947597545389154*^9},
+ CellLabel->
+  "During evaluation of \
+In[82]:=",ExpressionUUID->"185495e2-e1e7-4405-8b0a-1d798c5ea505"],
+
+Cell[BoxData["True"], "Output",
+ CellChangeTimes->{
+  3.9460901061460238`*^9, 3.9460924822889214`*^9, 3.946094144986815*^9, 
+   3.946094250156856*^9, 3.946094901719736*^9, 3.946117013149132*^9, 
+   3.946271042212826*^9, 3.946295671713813*^9, 3.946297456938957*^9, 
+   3.9462975446105347`*^9, 3.9462978719075737`*^9, 3.946304370619186*^9, 
+   3.946305477466053*^9, 3.947481726568528*^9, 3.947562450449238*^9, {
+   3.947562633037959*^9, 3.947562652024784*^9}, 3.947580859668643*^9, 
+   3.9475972653231707`*^9, 3.947597545424952*^9},
+ CellLabel->
+  "Out[153]=",ExpressionUUID->"9d4d2322-805d-427f-8b2a-4562a6078fb6"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"$V", "[", 
+    RowBox[{"79", ",", "1"}], "]"}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+     FractionBox[
+      RowBox[{
+       RowBox[{"$V", "[", 
+        RowBox[{"81", ",", "1"}], "]"}], "-", 
+       RowBox[{"$V", "[", 
+        RowBox[{"82", ",", "1"}], "]"}]}], 
+      RowBox[{"$V", "[", 
+       RowBox[{"2", ",", "1"}], "]"}]], "-", 
+     FractionBox[
+      RowBox[{"0.5`", " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"$V", "[", 
+          RowBox[{"84", ",", "1"}], "]"}], "-", 
+         RowBox[{"$V", "[", 
+          RowBox[{"85", ",", "1"}], "]"}]}], ")"}]}], 
+      RowBox[{"$V", "[", 
+       RowBox[{"2", ",", "1"}], "]"}]]}], ")"}]}], "+", 
+  RowBox[{
+   RowBox[{"$V", "[", 
+    RowBox[{"83", ",", "1"}], "]"}], " ", 
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"-", 
+      RowBox[{"(", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{"1", "-", 
+          SuperscriptBox[
+           RowBox[{"$V", "[", 
+            RowBox[{"84", ",", "1"}], "]"}], "2"]}], ")"}], " ", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"$V", "[", 
+           RowBox[{"84", ",", "1"}], "]"}], "-", 
+          RowBox[{
+           RowBox[{"$V", "[", 
+            RowBox[{"3", ",", "1"}], "]"}], " ", 
+           RowBox[{"$V", "[", 
+            RowBox[{"81", ",", "1"}], "]"}], " ", 
+           RowBox[{"(", 
+            RowBox[{"1", "-", 
+             SuperscriptBox[
+              RowBox[{"$V", "[", 
+               RowBox[{"84", ",", "1"}], "]"}], "2"]}], ")"}]}]}], ")"}]}], 
+       ")"}]}], "+", 
+     FractionBox[
+      RowBox[{
+       SuperscriptBox[
+        RowBox[{"$V", "[", 
+         RowBox[{"4", ",", "1"}], "]"}], "2"], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"$V", "[", 
+          RowBox[{"84", ",", "1"}], "]"}], "-", 
+         RowBox[{"$V", "[", 
+          RowBox[{"85", ",", "1"}], "]"}]}], ")"}]}], 
+      RowBox[{"$V", "[", 
+       RowBox[{"2", ",", "1"}], "]"}]]}], ")"}]}], "+", 
+  RowBox[{
+   RowBox[{"$V", "[", 
+    RowBox[{"5", ",", "1"}], "]"}], " ", 
+   RowBox[{"$V", "[", 
+    RowBox[{"88", ",", "1"}], "]"}], " ", 
+   RowBox[{"$V", "[", 
+    RowBox[{"93", ",", "1"}], "]"}]}], "+", 
+  RowBox[{
+   RowBox[{"$V", "[", 
+    RowBox[{"5", ",", "1"}], "]"}], " ", 
+   RowBox[{"$V", "[", 
+    RowBox[{"91", ",", "1"}], "]"}], " ", 
+   RowBox[{"$V", "[", 
+    RowBox[{"95", ",", "1"}], "]"}]}], "+", 
+  RowBox[{
+   RowBox[{"$V", "[", 
+    RowBox[{"1", ",", "1"}], "]"}], " ", 
+   RowBox[{"$V", "[", 
+    RowBox[{"4", ",", "1"}], "]"}], " ", 
+   RowBox[{"$V", "[", 
+    RowBox[{"6", ",", "1"}], "]"}], " ", 
+   RowBox[{"$V", "[", 
+    RowBox[{"96", ",", "1"}], "]"}]}], "+", 
+  RowBox[{
+   RowBox[{"$V", "[", 
+    RowBox[{"1", ",", "1"}], "]"}], " ", 
+   RowBox[{"$V", "[", 
+    RowBox[{"4", ",", "1"}], "]"}], " ", 
+   RowBox[{"$V", "[", 
+    RowBox[{"7", ",", "1"}], "]"}], " ", 
+   RowBox[{"$V", "[", 
+    RowBox[{"97", ",", "1"}], "]"}]}], "+", 
+  RowBox[{
+   SuperscriptBox[
+    RowBox[{"$V", "[", 
+     RowBox[{"4", ",", "1"}], "]"}], "2"], " ", 
+   RowBox[{"$V", "[", 
+    RowBox[{"96", ",", "1"}], "]"}], " ", 
+   RowBox[{"$V", "[", 
+    RowBox[{"98", ",", "1"}], "]"}]}], "+", 
+  RowBox[{
+   SuperscriptBox[
+    RowBox[{"$V", "[", 
+     RowBox[{"4", ",", "1"}], "]"}], "2"], " ", 
+   RowBox[{"$V", "[", 
+    RowBox[{"97", ",", "1"}], "]"}], " ", 
+   RowBox[{"$V", "[", 
+    RowBox[{"99", ",", "1"}], "]"}]}]}]], "Output",
+ CellChangeTimes->{
+  3.9460901061460238`*^9, 3.9460924822889214`*^9, 3.946094144986815*^9, 
+   3.946094250156856*^9, 3.946094901719736*^9, 3.946117013149132*^9, 
+   3.946271042212826*^9, 3.946295671713813*^9, 3.946297456938957*^9, 
+   3.9462975446105347`*^9, 3.9462978719075737`*^9, 3.946304370619186*^9, 
+   3.946305477466053*^9, 3.947481726568528*^9, 3.947562450449238*^9, {
+   3.947562633037959*^9, 3.947562652024784*^9}, 3.947580859668643*^9, 
+   3.9475972653231707`*^9, 3.947597545426476*^9},
+ CellLabel->
+  "Out[154]=",ExpressionUUID->"c511dbb4-2c3a-4677-9e47-a57ba250daa7"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{"-", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", 
+          RowBox[{"$V", "[", 
+           RowBox[{"9", ",", "1"}], "]"}]}], "+", 
+         RowBox[{"$V", "[", 
+          RowBox[{"11", ",", "1"}], "]"}]}], ")"}], " ", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"-", 
+          RowBox[{"$V", "[", 
+           RowBox[{"8", ",", "1"}], "]"}]}], "+", 
+         RowBox[{"$V", "[", 
+          RowBox[{"12", ",", "1"}], "]"}]}], ")"}]}], ")"}]}], "+", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", 
+        RowBox[{"$V", "[", 
+         RowBox[{"8", ",", "1"}], "]"}]}], "+", 
+       RowBox[{"$V", "[", 
+        RowBox[{"10", ",", "1"}], "]"}]}], ")"}], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", 
+        RowBox[{"$V", "[", 
+         RowBox[{"9", ",", "1"}], "]"}]}], "+", 
+       RowBox[{"$V", "[", 
+        RowBox[{"13", ",", "1"}], "]"}]}], ")"}]}]}], ")"}], " ", 
+  RowBox[{"$V", "[", 
+   RowBox[{"77", ",", "1"}], "]"}], " ", 
+  RowBox[{"(", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"$V", "[", 
+      RowBox[{"79", ",", "1"}], "]"}], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       FractionBox[
+        RowBox[{
+         RowBox[{"$V", "[", 
+          RowBox[{"81", ",", "1"}], "]"}], "-", 
+         RowBox[{"$V", "[", 
+          RowBox[{"82", ",", "1"}], "]"}]}], 
+        RowBox[{"$V", "[", 
+         RowBox[{"2", ",", "1"}], "]"}]], "-", 
+       FractionBox[
+        RowBox[{"0.5`", " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"$V", "[", 
+            RowBox[{"84", ",", "1"}], "]"}], "-", 
+           RowBox[{"$V", "[", 
+            RowBox[{"85", ",", "1"}], "]"}]}], ")"}]}], 
+        RowBox[{"$V", "[", 
+         RowBox[{"2", ",", "1"}], "]"}]]}], ")"}]}], "+", 
+    RowBox[{
+     RowBox[{"$V", "[", 
+      RowBox[{"83", ",", "1"}], "]"}], " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"-", 
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{"1", "-", 
+            SuperscriptBox[
+             RowBox[{"$V", "[", 
+              RowBox[{"84", ",", "1"}], "]"}], "2"]}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"$V", "[", 
+             RowBox[{"84", ",", "1"}], "]"}], "-", 
+            RowBox[{
+             RowBox[{"$V", "[", 
+              RowBox[{"3", ",", "1"}], "]"}], " ", 
+             RowBox[{"$V", "[", 
+              RowBox[{"81", ",", "1"}], "]"}], " ", 
+             RowBox[{"(", 
+              RowBox[{"1", "-", 
+               SuperscriptBox[
+                RowBox[{"$V", "[", 
+                 RowBox[{"84", ",", "1"}], "]"}], "2"]}], ")"}]}]}], ")"}]}], 
+         ")"}]}], "+", 
+       FractionBox[
+        RowBox[{
+         SuperscriptBox[
+          RowBox[{"$V", "[", 
+           RowBox[{"4", ",", "1"}], "]"}], "2"], " ", 
+         RowBox[{"(", 
+          RowBox[{
+           RowBox[{"$V", "[", 
+            RowBox[{"84", ",", "1"}], "]"}], "-", 
+           RowBox[{"$V", "[", 
+            RowBox[{"85", ",", "1"}], "]"}]}], ")"}]}], 
+        RowBox[{"$V", "[", 
+         RowBox[{"2", ",", "1"}], "]"}]]}], ")"}]}], "+", 
+    RowBox[{
+     RowBox[{"$V", "[", 
+      RowBox[{"5", ",", "1"}], "]"}], " ", 
+     RowBox[{"$V", "[", 
+      RowBox[{"88", ",", "1"}], "]"}], " ", 
+     RowBox[{"$V", "[", 
+      RowBox[{"93", ",", "1"}], "]"}]}], "+", 
+    RowBox[{
+     RowBox[{"$V", "[", 
+      RowBox[{"5", ",", "1"}], "]"}], " ", 
+     RowBox[{"$V", "[", 
+      RowBox[{"91", ",", "1"}], "]"}], " ", 
+     RowBox[{"$V", "[", 
+      RowBox[{"95", ",", "1"}], "]"}]}], "+", 
+    RowBox[{
+     RowBox[{"$V", "[", 
+      RowBox[{"1", ",", "1"}], "]"}], " ", 
+     RowBox[{"$V", "[", 
+      RowBox[{"4", ",", "1"}], "]"}], " ", 
+     RowBox[{"$V", "[", 
+      RowBox[{"6", ",", "1"}], "]"}], " ", 
+     RowBox[{"$V", "[", 
+      RowBox[{"96", ",", "1"}], "]"}]}], "+", 
+    RowBox[{
+     RowBox[{"$V", "[", 
+      RowBox[{"1", ",", "1"}], "]"}], " ", 
+     RowBox[{"$V", "[", 
+      RowBox[{"4", ",", "1"}], "]"}], " ", 
+     RowBox[{"$V", "[", 
+      RowBox[{"7", ",", "1"}], "]"}], " ", 
+     RowBox[{"$V", "[", 
+      RowBox[{"97", ",", "1"}], "]"}]}], "+", 
+    RowBox[{
+     SuperscriptBox[
+      RowBox[{"$V", "[", 
+       RowBox[{"4", ",", "1"}], "]"}], "2"], " ", 
+     RowBox[{"$V", "[", 
+      RowBox[{"96", ",", "1"}], "]"}], " ", 
+     RowBox[{"$V", "[", 
+      RowBox[{"98", ",", "1"}], "]"}]}], "+", 
+    RowBox[{
+     SuperscriptBox[
+      RowBox[{"$V", "[", 
+       RowBox[{"4", ",", "1"}], "]"}], "2"], " ", 
+     RowBox[{"$V", "[", 
+      RowBox[{"97", ",", "1"}], "]"}], " ", 
+     RowBox[{"$V", "[", 
+      RowBox[{"99", ",", "1"}], "]"}]}]}], ")"}]}]], "Output",
+ CellChangeTimes->{
+  3.9460901061460238`*^9, 3.9460924822889214`*^9, 3.946094144986815*^9, 
+   3.946094250156856*^9, 3.946094901719736*^9, 3.946117013149132*^9, 
+   3.946271042212826*^9, 3.946295671713813*^9, 3.946297456938957*^9, 
+   3.9462975446105347`*^9, 3.9462978719075737`*^9, 3.946304370619186*^9, 
+   3.946305477466053*^9, 3.947481726568528*^9, 3.947562450449238*^9, {
+   3.947562633037959*^9, 3.947562652024784*^9}, 3.947580859668643*^9, 
+   3.9475972653231707`*^9, 3.947597545428133*^9},
+ CellLabel->
+  "Out[155]=",ExpressionUUID->"7286d861-87d2-4159-aa1b-ee548d7da6d0"],
+
+Cell[BoxData[
+ TagBox[GridBox[{
+    {
+     StyleBox["\<\"File:\"\>",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0, 1],
+      FrontFaceColor->RGBColor[0, 0, 1],
+      BackFaceColor->RGBColor[0, 0, 1],
+      GraphicsColor->RGBColor[0, 0, 1],
+      FontWeight->Bold,
+      FontColor->RGBColor[0, 0, 1]], "\<\"ice2dbasic.f90\"\>", 
+     StyleBox["\<\"Size:\"\>",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0, 1],
+      FrontFaceColor->RGBColor[0, 0, 1],
+      BackFaceColor->RGBColor[0, 0, 1],
+      GraphicsColor->RGBColor[0, 0, 1],
+      FontWeight->Bold,
+      FontColor->RGBColor[0, 0, 1]], "6283"},
+    {"\<\"Methods\"\>", "\<\"No.Formulae\"\>", "\<\"No.Leafs\"\>", 
+     "\[SpanFromLeft]"},
+    {
+     StyleBox["\<\"ice2dbasic\"\>",
+      StripOnInput->False,
+      LineColor->RGBColor[0, 0, 1],
+      FrontFaceColor->RGBColor[0, 0, 1],
+      BackFaceColor->RGBColor[0, 0, 1],
+      GraphicsColor->RGBColor[0, 0, 1],
+      FontWeight->Bold,
+      FontColor->RGBColor[0, 0, 1]], "151", "2229", "\[SpanFromLeft]"}
+   },
+   AutoDelete->False,
+   GridBoxDividers->{"Rows" -> {1, 2}},
+   GridBoxFrame->{"ColumnsIndexed" -> {{{1, -1}, {1, -1}} -> True}},
+   GridBoxItemSize->{"Columns" -> {{Automatic}}, "Rows" -> {{Automatic}}}],
+  "Grid"]], "Output",
+ CellChangeTimes->{
+  3.9460901061460238`*^9, 3.9460924822889214`*^9, 3.946094144986815*^9, 
+   3.946094250156856*^9, 3.946094901719736*^9, 3.946117013149132*^9, 
+   3.946271042212826*^9, 3.946295671713813*^9, 3.946297456938957*^9, 
+   3.9462975446105347`*^9, 3.9462978719075737`*^9, 3.946304370619186*^9, 
+   3.946305477466053*^9, 3.947481726568528*^9, 3.947562450449238*^9, {
+   3.947562633037959*^9, 3.947562652024784*^9}, 3.947580859668643*^9, 
+   3.9475972653231707`*^9, 3.947597545429586*^9},
+ CellLabel->
+  "Out[156]=",ExpressionUUID->"10275697-b566-479e-8d8e-37c696083531"]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{3.474197825235133*^9, 3.47420161346106*^9},
+ CellLabel->
+  "In[157]:=",ExpressionUUID->"cd83fb15-705d-4bd3-b69e-fba000d55ef0"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{3.474055265107882*^9},
+ CellLabel->
+  "In[158]:=",ExpressionUUID->"5ae13841-7eb7-4278-afdb-b1f7c35c5b06"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.447508077983658*^9, 3.447508078145165*^9}, {
+   3.447508114486775*^9, 3.447508114821829*^9}, 3.451057126616637*^9, 
+   3.457782306250087*^9, {3.474115444361475*^9, 3.474115444537497*^9}},
+ CellLabel->
+  "In[159]:=",ExpressionUUID->"f27b2a41-c440-4fd9-b431-6c87b19efeb0"],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.466348308323692*^9, 3.466348314383057*^9}},
+ CellLabel->
+  "In[160]:=",ExpressionUUID->"b80b11f7-f7b0-48a4-9fc0-48b62b70daf6"],
+
+Cell[BoxData[" "], "Input",
+ CellChangeTimes->{3.946043655044965*^9},
+ CellLabel->
+  "In[161]:=",ExpressionUUID->"8c578c0d-122b-4679-83c3-13cbc419a9d1"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\[AliasDelimiter]"], "Input",
+ CellChangeTimes->{3.947481745284289*^9},
+ CellLabel->
+  "In[162]:=",ExpressionUUID->"a53f1975-a5b4-45e6-ab5d-598f478a0032"],
+
+Cell[BoxData["\[AliasDelimiter]"], "Output",
+ CellChangeTimes->{{3.947562634785594*^9, 3.947562654089182*^9}, 
+   3.947580861830941*^9, 3.947597269564049*^9, 3.947597545602269*^9},
+ CellLabel->
+  "Out[162]=",ExpressionUUID->"971e65c5-3806-43be-8749-ea55e0c8b4cc"]
+}, Open  ]]
+},
+WindowSize->{1435.5, 774},
+WindowMargins->{{-7.5, Automatic}, {Automatic, 0}},
+PrintingPageRange->{Automatic, Automatic},
+PrintingOptions->{"Magnification"->1.,
+"PaperOrientation"->"Portrait",
+"PaperSize"->{611.28, 789.57},
+"PostScriptOutputFile"->"/home/pedro/print.pdf"},
+Magnification:>2.2,
+FrontEndVersion->"14.2 for Linux x86 (64-bit) (December 26, 2024)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"5ab05003-f258-4710-8278-c4e8ab3225d4"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[567, 22, 57852, 1733, 4726, "Input",ExpressionUUID->"96ac75c9-d415-4194-a818-a229211ff046"],
+Cell[58422, 1757, 609, 9, 73, "Output",ExpressionUUID->"3b6ba988-9d95-4fb9-b43e-7c48d8609094"],
+Cell[59034, 1768, 25962, 835, 456, "Output",ExpressionUUID->"dbace8c3-a668-4332-8992-c693a27e4075"],
+Cell[84999, 2605, 51907, 1488, 1090, "Output",ExpressionUUID->"0583a97a-4145-4773-9eda-d64d78326cfe"],
+Cell[136909, 4095, 1884, 46, 130, "Print",ExpressionUUID->"185495e2-e1e7-4405-8b0a-1d798c5ea505"],
+Cell[138796, 4143, 613, 10, 73, "Output",ExpressionUUID->"9d4d2322-805d-427f-8b2a-4562a6078fb6"],
+Cell[139412, 4155, 4015, 123, 490, "Output",ExpressionUUID->"c511dbb4-2c3a-4677-9e47-a57ba250daa7"],
+Cell[143430, 4280, 5343, 161, 593, "Output",ExpressionUUID->"7286d861-87d2-4159-aa1b-ee548d7da6d0"],
+Cell[148776, 4443, 1856, 45, 159, "Output",ExpressionUUID->"10275697-b566-479e-8d8e-37c696083531"]
+}, Open  ]],
+Cell[150647, 4491, 172, 3, 64, "Input",ExpressionUUID->"cd83fb15-705d-4bd3-b69e-fba000d55ef0"],
+Cell[150822, 4496, 151, 3, 64, "Input",ExpressionUUID->"5ae13841-7eb7-4278-afdb-b1f7c35c5b06"],
+Cell[150976, 4501, 319, 5, 64, "Input",ExpressionUUID->"f27b2a41-c440-4fd9-b431-6c87b19efeb0"],
+Cell[151298, 4508, 175, 3, 64, "Input",ExpressionUUID->"b80b11f7-f7b0-48a4-9fc0-48b62b70daf6"],
+Cell[151476, 4513, 152, 3, 64, "Input",ExpressionUUID->"8c578c0d-122b-4679-83c3-13cbc419a9d1"],
+Cell[CellGroupData[{
+Cell[151653, 4520, 168, 3, 64, "Input",ExpressionUUID->"a53f1975-a5b4-45e6-ab5d-598f478a0032"],
+Cell[151824, 4525, 263, 4, 73, "Output",ExpressionUUID->"971e65c5-3806-43be-8749-ea55e0c8b4cc"]
+}, Open  ]]
+}
+]
+*)
+
